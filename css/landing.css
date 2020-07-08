@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(105, 105, 253);
+}
+
+main{
+    text-align: center;
+}
+
+#notLogIn {
+    margin-top: 15px;
+    margin-left: 15px;
+    color: white;
+    font-weight: 600;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+    width: 10%;
+    margin-bottom: 10px;
+}
+
+.logs {
+    
+}
+
+.mainTitle {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    font-size: 60px;
+}
