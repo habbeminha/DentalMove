@@ -1,2 +1,0 @@
-# DentalMove
-melhor app cachorro
