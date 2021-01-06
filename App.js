@@ -2,20 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createGlobalStyle } from 'styled-components';
-
-
+//import {  createSwitchNavigator, createAppContainer } from 'react-navigation'; 
+import SignUpPage from './src/pages/SignUpPage';
+import LoginPage from './src/pages/LoginPage';
 import HomePage from './src/pages/HomePage';
-
-//import GlobalFonts from './MainIcon/fonts.js';
-/*render() {
-  return ( 
-      <Wrapper> 
-        
-          <GlobalFonts />
-  // ...
-      </Wrapper>
-  ); 
-} */
 
 const GlobalStyle = createGlobalStyle `
   
@@ -27,15 +17,14 @@ const GlobalStyle = createGlobalStyle `
 
 `
 
-export default function App() {
+const App = () => {
+  return(
+    <SignUpPage />
+  )
+}
 
-  return (
-    <>
-    <GlobalStyle />
-    <HomePage />
-    </>
-  );
+export default App;
 
-}  
+
 
 

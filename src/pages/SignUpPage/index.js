@@ -3,18 +3,19 @@ import { View, Text } from 'react-native';
 import StyledInput from '../../components/StyledInput';
 import MainContainer from '../../components/MainContainer';
 import StyledButton from '../../components/StyledButton';
-import MainIcon from '../../components/MainIcon'; 
-const LoginPage = () => {
+
+const SignUpPage = () => {
 
     return(
         <MainContainer> 
-         <MainIcon/>
-         <StyledInput placeholder='Usuário'/>
+        
+         <StyledInput placeholder='Nome de usuário'/>
+         <StyledInput placeholder='Email'/>
          <StyledInput placeholder='Senha'/>
-         <StyledButton> ENTRAR</StyledButton>
+         <StyledButton> CADASTRAR</StyledButton>
 
         </MainContainer>
     );
 }
 
-export default LoginPage;
+export default SignUpPage;
