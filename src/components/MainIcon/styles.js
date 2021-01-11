@@ -1,24 +1,22 @@
 import styled from 'styled-components/native';
-import { View } from 'react-native';
 
 export const Container = styled.View`
-  @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&display=swap');
     display: flex;
     flex-direction: row;
-    width: 250px;
-   
-    /* font-family: 'Bungee', cursive, serif; */
-
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0px;
 `;
 
 export const WordsContainer = styled.View`
-    width: 190px;
+    width: 65%;
     text-align: right;
     color: #FFF;
     font-size: 3rem;
-
+    margin: 0 -2px;
 `;
 
 export const ImageContainer = styled.View`
-    width: 60px;
+    height: 6rem;
+    width: 6rem;
 `;

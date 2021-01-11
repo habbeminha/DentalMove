@@ -1,18 +1,20 @@
 import React from 'react';
-import { Container, WordsContainer, ImageContainer } from './styles.js';
+import { Container, WordsContainer, WordsText, ImageContainer } from './styles.js';
 import  dente  from '../../../assets/dente.png';
-import  {Image}  from 'react-native';
-
+import  {Text, Image}  from 'react-native';
+import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
 
 const MainIcon = () => {
 
+    useFonts({Bungee_400Regular});
+
     return(
         <Container>
-            <WordsContainer className='MainIcon'>
-                Dental Move
+            <WordsContainer style={{fontFamily: 'Bungee_400Regular'}}>
+                Dental&nbsp;&nbsp; Move
             </WordsContainer>
             <ImageContainer>
-                <Image source={require ('../../../assets/dente.png')} width= '20px' height= ' 20px'/>
+                <Image source={dente} style={{ width: '100%', height: '100%'}}/>
             </ImageContainer>
         </Container>
     )
