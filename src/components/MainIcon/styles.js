@@ -9,11 +9,12 @@ export const Container = styled.View`
 `;
 
 export const WordsContainer = styled.View`
-    width: 65%;
+    width: 18rem;
     text-align: right;
     color: #FFF;
     font-size: 3rem;
     margin: 0 -2px;
+    line-height: 2.4rem;
 `;
 
 export const ImageContainer = styled.View`

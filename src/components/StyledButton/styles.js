@@ -6,9 +6,9 @@ export const StyledButton = styled.TouchableOpacity`
     box-shadow: 0 2px 2px #393939;
     border: none;
     border-radius: 5px;
-    font-size: 1.3rem;
+    padding: 10px 20px;
+    margin-top: 2rem;
     text-transform: uppercase;
     color: #393939;
-    padding: 10px 20px;
-    margin-top: 25px;
+    font-size: 1.3rem;
 `;

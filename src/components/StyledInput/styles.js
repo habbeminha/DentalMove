@@ -3,7 +3,7 @@ import { View, Text, TextInput } from 'react-native';
 import styled from 'styled-components/native';
 
 export const StyledInput = styled.TextInput`
-    width: 30%;
+    width: 100%;
     padding: 10px 20px;
     margin-top: 25px;
     color: #939393; 
