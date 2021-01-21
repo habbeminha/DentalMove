@@ -7,6 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignUpPage from './src/pages/SignUpPage';
 import LoginPage from './src/pages/LoginPage';
 import HomePage from './src/pages/HomePage';
+import AtletasPage from './src/pages/AtletasPage';
+
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -24,6 +26,7 @@ const App = () => {
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="SignUp" component={SignUpPage} />
+        <Stack.Screen name="AtletasPage" component={AtletasPage} />
       </Stack.Navigator>
     </NavigationContainer>
   )

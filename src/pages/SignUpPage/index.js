@@ -9,6 +9,7 @@ import Title from '../../components/Title';
 import { RadioContainer } from './styles';
 
 import { firebase } from '../../firebase/config'
+import AtletasPage from '../AtletasPage';
 
 const SignUpPage = ({navigation}) => {
 
@@ -98,7 +99,7 @@ const SignUpPage = ({navigation}) => {
                     <Text style={{color: '#FFF'}}>Profissional da saúde</Text>
                 </RadioContainer>
             </View>
-            <StyledButton text='CONTINUAR' onPress={createNewUser} />
+            <StyledButton text='CONTINUAR' onPress={()=> {navigation.navigate('AtletasPage')}} />
             <StyledLink onPress={ () => navigation.goBack()}>Voltar</StyledLink>
         </MainContainer>
     );
