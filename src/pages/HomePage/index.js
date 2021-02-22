@@ -11,8 +11,8 @@ const HomePage = ({ navigation }) => {
             <MainIcon />
             <StyledButton onPress={ () => navigation.navigate('Login')} text='ENTRAR' />
             <StyledButton onPress={ () => navigation.navigate('SignUp')} text='CADASTRAR'/>
-
-            <StyledLink style={{marginTop: '3rem'}}>Visitante</StyledLink>
+            <StyledLink onPress={ () => navigation.navigate('MainPages') } 
+            style={{marginTop: '3rem'}} >Visitante</StyledLink>
         </MainContainer>
     );
 }

@@ -9,4 +9,5 @@ export const MainContainer = styled.View`
     min-height: 100vh;
     background-color: #5599FF;
     font-weight: bold;
+    overflow: hidden;
 `;

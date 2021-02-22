@@ -6,6 +6,7 @@ import MainContainer from '../../components/MainContainer';
 import StyledButton from '../../components/StyledButton';
 import StyledLink from '../../components/StyledLink';
 import Title from '../../components/Title';
+import RadioOption from '../../components/RadioOption';
 import { RadioContainer } from './styles';
 
 import { firebase } from '../../firebase/config'
@@ -50,8 +51,11 @@ const SignUpPage = ({navigation}) => {
         } 
     }
 
-    const checkInputs = () => {
+    const checkInputs = async () => {
         let errors = '';
+        if(email.length < 3){
+            errors += 'Email Inválido\n';
+        }
         if(password.length < 8){
             errors += 'A senha deve conter mais de 8 caracteres\n';
         }
@@ -62,7 +66,13 @@ const SignUpPage = ({navigation}) => {
             errors += 'Marque uma opção\n';
         }
         if(errors === ''){
-            return true;
+            const emailResult = await firebase.auth().fetchSignInMethodsForEmail(email);
+            if(emailResult.length !== 0){
+                alert('O email já esta sendo usado');
+                return false;
+            } else {
+                return true;
+            }
         } else {
             alert(errors);
             return false;
@@ -85,20 +95,23 @@ const SignUpPage = ({navigation}) => {
                 <Text style={{color: '#FFF', marginTop: '1rem', fontSize: '1rem'}}>
                     Você é:
                 </Text>
-                <RadioContainer>
-                    <RadioButton color='#FFF' uncheckedColor='#FFF'
-                     value='atleta' onPress={ () => setType('atleta')} 
-                     status={ type === 'atleta' ? 'checked' : 'unchecked' } />
-                    <Text style={{color: '#FFF'}}>Atleta</Text>
-                </RadioContainer>
-                <RadioContainer>
-                    <RadioButton color='#FFF' uncheckedColor='#FFF'
-                     value='profissional' onPress={ () => setType('profissional')} 
-                     status={ type === 'profissional' ? 'checked' : 'unchecked' } />
-                    <Text style={{color: '#FFF'}}>Profissional da saúde</Text>
-                </RadioContainer>
+                <RadioOption title="Atleta" 
+                status={type === 'atleta' ? 'checked' : 'unchecked'}
+                onPress={ () => setType('atleta')}/>
+                <RadioOption title="Profissional da saúde" 
+                status={type === 'profissional' ? 'checked' : 'unchecked'}
+                onPress={ () => setType('profissional')}/>
             </View>
-            <StyledButton text='CONTINUAR' onPress={createNewUser} />
+            <StyledButton text='CONTINUAR' 
+            onPress={() => {
+                if(checkInputs() || true){
+                    if( type === 'atleta'){
+                        navigation.navigate('Athletes');
+                    } else if( type === 'profissional'){
+                        //navigation.navigate('')
+                    }
+                }
+            }} />
             <StyledLink onPress={ () => navigation.goBack()}>Voltar</StyledLink>
         </MainContainer>
     );

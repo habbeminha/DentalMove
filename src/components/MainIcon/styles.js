@@ -9,7 +9,7 @@ export const Container = styled.View`
 `;
 
 export const WordsContainer = styled.View`
-    width: 18rem;
+    width: 15rem;
     text-align: right;
     color: #FFF;
     font-size: 3rem;
