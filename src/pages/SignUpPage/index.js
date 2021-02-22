@@ -10,6 +10,7 @@ import RadioOption from '../../components/RadioOption';
 import { RadioContainer } from './styles';
 
 import { firebase } from '../../firebase/config'
+import AtletasPage from '../AtletasPage';
 
 const SignUpPage = ({navigation}) => {
 
