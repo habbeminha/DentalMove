@@ -1,14 +1,13 @@
 import React from 'react';
-import { Text } from 'react-native';
+import PageContainer from '../../components/PageContainer';
 import Title from '../../components/Title';
+
 
 const ExplorePage = () => {
     return(
-        <>
-            <Title>
-                Explorar Artigos
-            </Title>
-        </>
+        <PageContainer>
+            <Title title='Explorar Artigos'/>
+        </PageContainer>
     )
 }
 

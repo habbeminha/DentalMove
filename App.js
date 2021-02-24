@@ -3,14 +3,17 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import  dente  from './assets/dente.png';
 import SignUpPage from './src/pages/SignUpPage';
 import LoginPage from './src/pages/LoginPage';
 import HomePage from './src/pages/HomePage';
 import ExplorePage from './src/pages/ExplorePage';
 import AthletesPage from './src/pages/AthletesPage';
-import { View } from 'react-native';
+import ProfileButton from './src/components/ProfileButton';
+import SavedArticlesPage from './src/pages/SavedArticlesPage';
+import { Image } from 'react-native';
+import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -23,7 +26,7 @@ const Drawer = createDrawerNavigator();
 
 const AuthPages = () => {
   return( 
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name="Home" component={HomePage} />
       <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="SignUp" component={SignUpPage} />
@@ -34,10 +37,43 @@ const AuthPages = () => {
 
 const MainPages = () => {
   return(
-    <Drawer.Navigator>
-      <Drawer.Screen name="Explore" component={ExplorePage}/>
+    <Drawer.Navigator 
+      drawerContent={ (props) => <CustomDrawerContent {...props}/> }
+      screenOptions={{  headerShown: true, headerTintColor: '#FFF', headerTitleAlign: 'center',
+      headerTitleStyle: { fontWeight: 'bold', }, headerStyle:{ backgroundColor: '#5599FF'},
+      headerRight: (props) => <ProfileButton />  }}>
+
+      <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
+      <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
+      
     </Drawer.Navigator>
   )
+}
+
+const CustomDrawerContent = (props) => {
+  useFonts({Bungee_400Regular});
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItem
+        label="DENTAL MOVE"
+        inactiveTintColor='#FFF'
+        inactiveBackgroundColor='#5599FF'
+        icon={ () => <Image source={dente} style={{height: '30px'}}/>} 
+        style={{
+          borderRadius: 0, margin: 0, marginTop: '-5px', marginBottom: '10px', padding: '1px'
+        }}
+        labelStyle={{
+          margin: 0, padding: 0, fontFamily: 'Bungee_400Regular', fontSize: '1.5rem'
+        }}
+        onPress={ () => props.navigation.closeDrawer()}
+      />
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Fechar"
+        onPress={ () => props.navigation.closeDrawer()}
+      />
+    </DrawerContentScrollView>
+  );
 }
 
 const App = () => {
