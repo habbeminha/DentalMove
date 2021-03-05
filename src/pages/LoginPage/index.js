@@ -6,40 +6,12 @@ import StyledButton from '../../components/StyledButton';
 import MainIcon from '../../components/MainIcon'; 
 import StyledLink from '../../components/StyledLink';
 
-import { firebase } from '../../firebase/config';
+import { login } from '../../firebase/services';
 
 const LoginPage = ({navigation}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const login = () => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .get()
-                    .then(firestoreDocument => {
-                        if (!firestoreDocument.exists) {
-                            alert("User does not exist anymore.")
-                            return;
-                        }
-                        const user = firestoreDocument.data()
-                        //navigation.navigate('Home', {user})
-                        alert('Login realizado com sucesso');
-                    })
-                    .catch(error => {
-                        alert(error)
-                    });
-            })
-            .catch(error => {
-                alert(error)
-            })
-    }
 
     return(
         <MainContainer> 
@@ -52,7 +24,7 @@ const LoginPage = ({navigation}) => {
             onChangeText={ text => setPassword(text) } value={password}/>
             <StyledLink style={{marginTop:'0.5rem', marginBottom: '1rem'}}>Esqueci a senha</StyledLink>
             </View>
-            <StyledButton text='ENTRAR' onPress={login}/>
+            <StyledButton text='ENTRAR' onPress={() => login(email, password)}/>
             <StyledLink onPress={() => navigation.goBack() }
             style={{marginTop: '3rem'}}>Voltar</StyledLink>
         </MainContainer>

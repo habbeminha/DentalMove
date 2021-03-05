@@ -6,5 +6,5 @@ export const StyledLink = styled.Text`
     text-decoration: underline;
     text-decoration-color: #FFF;
     cursor: pointer;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 `

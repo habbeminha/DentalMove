@@ -19,52 +19,29 @@ const SignUpPage = ({navigation}) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [type, setType] = useState('');
 
-    const createNewUser = async () => {
-        if(checkInputs()){
-            firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const data = {
-                    id: uid,
-                    email,
-                    username,
-                    password,
-                    type,
-                };
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .set(data)
-                    .then(() => {
-                        alert('Cadastro realizado com sucesso')
-                        //navigation.navigate('Home', {user: data});
-                    })
-                    .catch((error) => {
-                        alert(error);
-                    });
-            })
-            .catch((error) => {
-                alert(error);
-        });
-        } 
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 
     const checkInputs = async () => {
         let errors = '';
-        if(email.length < 3){
-            errors += 'Email Inválido\n';
-        }
-        if(password.length < 8){
+        if(username.length < 4){
+            errors += 'Nome de usuário inválido\n';
+        } 
+        else if(!validateEmail(email)){
+            errors += 'Email inválido\n';
+        } 
+        else if(password.length < 8){
             errors += 'A senha deve conter mais de 8 caracteres\n';
-        }
-        if(password !== confirmPassword){
+        } 
+        else if(password !== confirmPassword){
             errors += 'As senhas não conferem\n';
         }
-        if(type === ''){
+        else if(type === ''){
             errors += 'Marque uma opção\n';
         }
+        
         if(errors === ''){
             const emailResult = await firebase.auth().fetchSignInMethodsForEmail(email);
             if(emailResult.length !== 0){
@@ -83,7 +60,7 @@ const SignUpPage = ({navigation}) => {
         <MainContainer> 
             <Title title="Cadastre-se"/>
 
-            <View style={{alignContent: 'left', width: '60%'}}>
+            <View style={{alignContent: 'left', width: '70%'}}>
                 <StyledInput placeholder='Nome de usuário' 
                 value={username} onChangeText={(text) => setUsername(text)}/>
                 <StyledInput placeholder='Email'
@@ -104,11 +81,11 @@ const SignUpPage = ({navigation}) => {
             </View>
             <StyledButton text='CONTINUAR' 
             onPress={() => {
-                if(checkInputs() || true){
+                if(checkInputs()){
                     if( type === 'atleta'){
                         navigation.navigate('Athletes');
                     } else if( type === 'profissional'){
-                        //navigation.navigate('')
+                        navigation.navigate('Professionals')
                     }
                 }
             }} />

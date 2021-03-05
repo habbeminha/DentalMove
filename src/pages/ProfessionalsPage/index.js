@@ -22,24 +22,19 @@ const ProfessionalsPage = ({navigation}) => {
                     Para melhor atender suas necessidades, responda:
                 </Text>
             <View>
-                <RadiosContainer title="Modalidade Praticada">
-                    <RadioOption title="Esportes aquáticos: natação, surfe, entre outros"/>
-                    <RadioOption title="Esportes individuais: lutas, corrida, ciclismo, entre outros"/>
-                    <RadioOption title="Esportes coletivos: handebol, futebol, basquete, entre outros"/>
-                </RadiosContainer>
-                <RadiosContainer title="Faz uso de isotônicos ou suplementos?">
+                <RadiosContainer title="Conduz atendimento personalizado ao atleta?">
                     <RadioOption title="Sim"/>
                     <RadioOption title="Não"/>
                 </RadiosContainer>
-                <RadiosContainer title="Faz uso de protetor bucal?">
+                <RadiosContainer title="Que tipo de atleta você atende?">
                     <RadioOption title="Sim"/>
                     <RadioOption title="Não"/>
                 </RadiosContainer>
-                <RadiosContainer title="Sente dor nas articulações?">
+                <RadiosContainer title="Quais são seus principais interesses sobre o tratamento de atletas?">
                     <RadioOption title="Sim"/>
                     <RadioOption title="Não"/>
                 </RadiosContainer>
-                <RadiosContainer title="Já sofreu algum trauma na face?">
+                <RadiosContainer title="Confecciona protetores bucais?">
                     <RadioOption title="Sim"/>
                     <RadioOption title="Não"/>
                 </RadiosContainer>

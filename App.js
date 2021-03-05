@@ -12,6 +12,8 @@ import ExplorePage from './src/pages/ExplorePage';
 import AthletesPage from './src/pages/AthletesPage';
 import ProfileButton from './src/components/ProfileButton';
 import SavedArticlesPage from './src/pages/SavedArticlesPage';
+import ProfessionalsPage from './src/pages/ProfessionalsPage';
+
 import { Image } from 'react-native';
 import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
 
@@ -31,6 +33,7 @@ const AuthPages = () => {
       <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="SignUp" component={SignUpPage} />
       <Stack.Screen name="Athletes" component={AthletesPage} />
+      <Stack.Screen name="Professionals" component={ProfessionalsPage} />
     </Stack.Navigator> 
   )
 }

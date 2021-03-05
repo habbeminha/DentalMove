@@ -5,15 +5,15 @@ import { TouchableOpacity } from 'react-native'
 
 const ArticleCard = (props) => {
     return(
-        <Container>
+        <Container onPress={props.onPress}>
             <ArticleHeader>
                 <ArticleTitle>
                     {props.title}
                 </ArticleTitle>
                 <TouchableOpacity onPress={props.save}>
                 {props.saved ?
-                    <AiFillHeart color='red' size='1.6rem'/> :
-                    <AiOutlineHeart size='1.6rem' /> }
+                    <AiFillHeart color='red' size='1.6em'/> :
+                    <AiOutlineHeart size='1.6em' /> }
                 </TouchableOpacity>
             </ArticleHeader>
             <ArticleAuthor>
