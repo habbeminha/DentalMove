@@ -11,9 +11,15 @@ export const Container = styled.View`
 export const WordsContainer = styled.View`
     width: 15rem;
     text-align: right;
+    margin: 0 -2px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+`;
+
+export const WordsText = styled.Text`
     color: #FFF;
     font-size: 3rem;
-    margin: 0 -2px;
     line-height: 2.4rem;
 `;
 

@@ -10,8 +10,13 @@ const MainIcon = () => {
 
     return(
         <Container>
-            <WordsContainer style={{fontFamily: 'Bungee_400Regular'}}>
-                Dental&nbsp;&nbsp; Move
+            <WordsContainer >
+                <WordsText style={{fontFamily: 'Bungee_400Regular'}}>
+                    Dental&nbsp;&nbsp; 
+                </WordsText>
+                <WordsText style={{fontFamily: 'Bungee_400Regular'}}>
+                    Move
+                </WordsText>
             </WordsContainer>
             <ImageContainer>
                 <Image source={dente} style={{ width: '100%', height: '100%'}}/>
