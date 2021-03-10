@@ -29,8 +29,8 @@ const SavedArticlesPage = () => {
                 <View style={{width: '100%'}}>
                     <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{savedArticles.length} artigos salvos</Text>
                 </View>
-                {savedArticles.map( (article) => 
-                <ArticleCard title={article.title} author={article.author} saved={article.saved} onPress={() => setShowArticle(article)}/>)}
+                {savedArticles.map( (article, index) => 
+                <ArticleCard key={index} title={article.title} author={article.author} saved={article.saved} onPress={() => setShowArticle(article)}/>)}
             </PageContainer> )
         :
         <PageContainer>

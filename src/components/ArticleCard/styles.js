@@ -20,6 +20,7 @@ export const ArticleHeader = styled.View`
 export const ArticleTitle = styled.Text`
     font-weight: bold;
     width: 85%;
+    font-size: 16px;
 `;
 
 export const ArticleAuthor = styled.Text`

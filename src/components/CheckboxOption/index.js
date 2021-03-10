@@ -1,5 +1,4 @@
 import React from 'react';
-import { Checkbox } from 'react-native-paper'; // APAGAR DO PROJETO
 import { RadioContainer } from './styles';
 import { Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';

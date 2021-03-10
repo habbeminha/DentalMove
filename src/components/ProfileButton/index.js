@@ -6,7 +6,7 @@ const ProfileButton = () => {
     return(
         <TouchableOpacity onPress={ () => {}}
             style={{marginLeft: 'auto', marginRight: 10,  width: 32}}>
-            <MaterialIcons name="bar-chart" size={24} color="white" />
+            <MaterialIcons name="bar-chart" size={32} color="white" />
         </TouchableOpacity>
     )
 }

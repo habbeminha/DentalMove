@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity, Linking } from 'react-native';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import GoBackButton from '../../components/GoBackButton';
 import PageContainer from '../../components/PageContainer';
 import {ArticleTitle, ArticleAuthor, ArticleContent, ArticleLinkButton} from './styles';
+import { AntDesign } from '@expo/vector-icons'
 
 const ArticlePage = (props) => {
 
@@ -15,9 +15,9 @@ const ArticlePage = (props) => {
             justifyContent: 'space-between', width: '100%'}}>
                 <GoBackButton goBack={props.goBack}/>
                 <TouchableOpacity onPress={props.save}>
-                {/* {props.saved ?
-                    <AiFillHeart color='red' size='1.6em'/> :
-                    <AiOutlineHeart size='1.6em' /> } */}
+                {props.saved ?
+                    <AntDesign name="heart" size={24} color="red" /> :
+                    <AntDesign name="hearto" size={24} color="black" /> }
                 </TouchableOpacity>
             </View>
             <ArticleTitle>

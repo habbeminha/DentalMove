@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { RadioButton } from 'react-native-paper';
 import StyledInput from '../../components/StyledInput';
 import MainContainer from '../../components/MainContainer';
 import StyledButton from '../../components/StyledButton';
 import StyledLink from '../../components/StyledLink';
 import Title from '../../components/Title';
 import RadioOption from '../../components/RadioOption';
-import { RadioContainer } from './styles';
+import RadiosContainer from '../../components/RadioContainer'
 
 import { firebase } from '../../firebase/config'
 
@@ -72,12 +71,14 @@ const SignUpPage = ({navigation}) => {
                 <Text style={{color: '#FFF', marginTop: 1, fontSize: 1}}>
                     Você é:
                 </Text>
+                <RadiosContainer title="Você é um(a): ">
                 <RadioOption title="Atleta" 
                 status={type === 'atleta' ? 'checked' : 'unchecked'}
                 onPress={ () => setType('atleta')}/>
                 <RadioOption title="Profissional da saúde" 
                 status={type === 'profissional' ? 'checked' : 'unchecked'}
                 onPress={ () => setType('profissional')}/>
+                </RadiosContainer>
             </View>
             <StyledButton text='CONTINUAR' 
             onPress={() => {

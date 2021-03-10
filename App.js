@@ -14,14 +14,8 @@ import ProfileButton from './src/components/ProfileButton';
 import SavedArticlesPage from './src/pages/SavedArticlesPage';
 import ProfessionalsPage from './src/pages/ProfessionalsPage';
 
-import { Image } from 'react-native';
-import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
-
-/* const GlobalStyle = createGlobalStyle`
-  * {
-      font-family: 'Roboto', sans-serif;
-    }
-`; */
+import { Image, StatusBar } from 'react-native';
+import {useFonts} from '@expo-google-fonts/dev'
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -46,15 +40,15 @@ const MainPages = () => {
       headerTitleStyle: { fontWeight: 'bold', }, headerStyle:{ backgroundColor: '#5599FF'},
       headerRight: (props) => <ProfileButton />  }}>
 
-      <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
       <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
+      <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
       
     </Drawer.Navigator>
   )
 }
 
 const CustomDrawerContent = (props) => {
-  useFonts({Bungee_400Regular});
+  useFonts({'Bungee_400Regular': require('./assets/Bungee-Regular.ttf') });
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItem
@@ -63,17 +57,17 @@ const CustomDrawerContent = (props) => {
         inactiveBackgroundColor='#5599FF'
         icon={ () => <Image source={dente} style={{height: 30, width: 30}}/>} 
         style={{
-          borderRadius: 0, margin: 0, marginTop: -5, marginBottom: 10, padding: 1
+          borderRadius: 5, margin: 0, marginBottom: 10, padding: 10
         }}
         labelStyle={{
-          margin: 0, padding: 0, fontFamily: 'Bungee_400Regular', fontSize: 24
+          margin: -10, padding: 0, fontFamily: 'Bungee_400Regular', fontSize: 20
         }}
         onPress={ () => props.navigation.closeDrawer()}
       />
       <DrawerItemList {...props} />
       <DrawerItem
-        label="Fechar"
-        onPress={ () => props.navigation.closeDrawer()}
+        label="Sair"
+        onPress={ () => props.navigation.navigate('AuthPages')}
       />
     </DrawerContentScrollView>
   );
@@ -82,7 +76,7 @@ const CustomDrawerContent = (props) => {
 const App = () => {
   return(
     <NavigationContainer>
-      {/* <GlobalStyle /> */}
+      <StatusBar barStyle='light-content' hidden={false} />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="AuthPages" component={AuthPages}/>
         <Stack.Screen name="MainPages" component={MainPages}/>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, ArticleTitle, ArticleHeader, ArticleAuthor } from './styles.js'
 import { TouchableOpacity } from 'react-native'
+import { AntDesign } from '@expo/vector-icons'
 
 const ArticleCard = (props) => {
     return(
@@ -10,9 +11,9 @@ const ArticleCard = (props) => {
                     {props.title}
                 </ArticleTitle>
                 <TouchableOpacity onPress={props.save}>
-                {/* {props.saved ?
-                    <AiFillHeart color='red' size='24px'/> :
-                    <AiOutlineHeart size='24px' /> } */}
+                {props.saved ?
+                    <AntDesign name="heart" size={24} color="red" /> :
+                    <AntDesign name="hearto" size={24} color="black" /> }
                 </TouchableOpacity>
             </ArticleHeader>
             <ArticleAuthor>

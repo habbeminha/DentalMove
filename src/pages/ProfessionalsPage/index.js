@@ -28,7 +28,7 @@ const ProfessionalsPage = ({navigation}) => {
     return(
         <MainContainer>
             <Title title="Profissional da Saúde"/>
-                <Text style={{color: 'white', fontSize: '18px', textAlign: 'center'}}>
+                <Text style={{color: 'white', fontSize: 18, textAlign: 'center'}}>
                     Para melhor atender suas necessidades, responda:
                 </Text>
             <View>
