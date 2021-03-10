@@ -9,8 +9,6 @@ export const Container = styled.TouchableOpacity`
     padding: 8px;
     margin-top: 10px;
     width: 350px;
-    //height: 100px;
-    //overflow-y: scroll;
 `;
 
 export const ArticleHeader = styled.View`
@@ -21,7 +19,6 @@ export const ArticleHeader = styled.View`
 
 export const ArticleTitle = styled.Text`
     font-weight: bold;
-    font-size: 1rem;
     width: 85%;
 `;
 

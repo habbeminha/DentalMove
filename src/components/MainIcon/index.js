@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, WordsContainer, WordsText, ImageContainer } from './styles.js';
 import  dente  from '../../../assets/dente.png';
-import  {Text, Image}  from 'react-native';
-import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
+import  {Image}  from 'react-native';
+import {useFonts} from '@expo-google-fonts/dev'
 
 const MainIcon = () => {
 
-    useFonts({Bungee_400Regular});
+    let [fontLoaded] = useFonts({'Bungee_400Regular': require('../../../assets/Bungee-Regular.ttf')});
 
-    return(
+    return( !fontLoaded ? <></> :
         <Container>
             <WordsContainer >
                 <WordsText style={{fontFamily: 'Bungee_400Regular'}}>

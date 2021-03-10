@@ -60,7 +60,7 @@ const SignUpPage = ({navigation}) => {
         <MainContainer> 
             <Title title="Cadastre-se"/>
 
-            <View style={{alignContent: 'left', width: '70%'}}>
+            <View style={{alignContent: 'left', width: '80%'}}>
                 <StyledInput placeholder='Nome de usuário' 
                 value={username} onChangeText={(text) => setUsername(text)}/>
                 <StyledInput placeholder='Email'
@@ -69,7 +69,7 @@ const SignUpPage = ({navigation}) => {
                 value={password} onChangeText={ (text) => setPassword(text)}/>
                 <StyledInput placeholder='Confirme a senha' type='password'
                 value={confirmPassword} onChangeText={ (text) => setConfirmPassword(text)}/>
-                <Text style={{color: '#FFF', marginTop: '1rem', fontSize: '1rem'}}>
+                <Text style={{color: '#FFF', marginTop: 1, fontSize: 1}}>
                     Você é:
                 </Text>
                 <RadioOption title="Atleta" 

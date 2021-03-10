@@ -5,12 +5,10 @@ export const Container = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 40px 0px;
+    margin: 60px 0px;
 `;
 
 export const WordsContainer = styled.View`
-    width: 15rem;
-    text-align: right;
     margin: 0 -2px;
     display: flex;
     flex-direction: column;
@@ -19,11 +17,11 @@ export const WordsContainer = styled.View`
 
 export const WordsText = styled.Text`
     color: #FFF;
-    font-size: 3rem;
-    line-height: 2.4rem;
+    font-size: 40px;
+    text-align: right;
 `;
 
 export const ImageContainer = styled.View`
-    height: 6rem;
-    width: 6rem;
+    height: 80px;
+    width: 80px;
 `;

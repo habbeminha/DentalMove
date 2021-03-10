@@ -1,15 +1,18 @@
 import React from 'react';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper'; // APAGAR DO PROJETO
 import { RadioContainer } from './styles';
 import { Text } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const CheckboxOption = (props) => {
     return(
-        <RadioContainer>
-            <Checkbox color='#FFF' uncheckedColor='#FFF'
-             onPress={props.onPress} status={props.checked ? 'checked' : 'unchecked'} />
-            <Text style={{color: '#FFF', fontWeight: 'bold', 
-            display: 'flex', flexWrap: 'wrap'}}>{props.title}</Text>
+        <RadioContainer onPress={props.onPress}>
+            {props.checked ? 
+                <MaterialIcons name="check-box" size={24} color="white" /> :
+                <MaterialIcons name="check-box-outline-blank" size={24} color="white" />
+            }
+            <Text style={{color: '#FFF', fontWeight: 'normal', fontSize: 16,
+            display: 'flex', flexWrap: 'wrap', marginLeft: 5}}>{props.title}</Text>
         </RadioContainer>
     )
 }

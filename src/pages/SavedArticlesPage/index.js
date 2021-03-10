@@ -17,7 +17,7 @@ const savedArticles = [{
 
 const SavedArticlesPage = () => {
 
-    const [showArticle, setShowArticle] = useState('');
+    const [showArticle, setShowArticle] = useState(false);
 
     return(
     savedArticles ? 
@@ -34,7 +34,7 @@ const SavedArticlesPage = () => {
             </PageContainer> )
         :
         <PageContainer>
-            <View style={{marginTop: '5rem', width: '80%'}}>
+            <View style={{marginTop: 50, width: '80%'}}>
                 <Text style={{textAlign: 'center', color: 'grey'}}>
                     Aqui você irá encontrar os seus artigos favoritos. <br />
                     Explore novos artigos e salve-os para encontrá-los aqui!

@@ -6,12 +6,13 @@ export const Container = styled.TouchableOpacity`
     border: none;
     border-radius: 5px;
     padding: 15px 20px 10px;
-    margin-top: 2rem;
+    margin-top: 16px;
+    margin-bottom: 16px;
 `;
 
 export const Text = styled.Text`
     text-transform: uppercase;
     color: #393939;
-    font-size: 1.3rem;
+    font-size: 24px;
     font-weight: bold;
 `;

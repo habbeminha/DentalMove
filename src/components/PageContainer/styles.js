@@ -1,14 +1,12 @@
 import styled from 'styled-components/native';
 
-export const PageContainer = styled.View`
+export const Container = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 90vh;
+    min-height: 100%;
     background-color: white;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding: 10px;
+    padding: 15px;
     margin: 0;
 `;

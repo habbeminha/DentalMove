@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const String = styled.Text`
-    font-size: 3rem;
+    font-size: 32px;
     margin: 5px;
     color: #FFF;
 `;

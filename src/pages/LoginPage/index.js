@@ -16,17 +16,16 @@ const LoginPage = ({navigation}) => {
     return(
         <MainContainer> 
             <MainIcon/>
-            <TextInput />
-            <View style={{width: '60%', alignItems: 'center'}}>
+            <View style={{width: '80%', alignItems: 'center'}}>
             <StyledInput placeholder='Email' 
             onChangeText={ text => setEmail(text) } value={email}/>
             <StyledInput placeholder='Senha' secureTextEntry
             onChangeText={ text => setPassword(text) } value={password}/>
-            <StyledLink style={{marginTop:'0.5rem', marginBottom: '1rem'}}>Esqueci a senha</StyledLink>
+            <StyledLink style={{marginTop: 16, marginBottom: 16}}>Esqueci a senha</StyledLink>
             </View>
             <StyledButton text='ENTRAR' onPress={() => login(email, password)}/>
             <StyledLink onPress={() => navigation.goBack() }
-            style={{marginTop: '3rem'}}>Voltar</StyledLink>
+            style={{marginTop: 3}}>Voltar</StyledLink>
         </MainContainer>
     );
 }

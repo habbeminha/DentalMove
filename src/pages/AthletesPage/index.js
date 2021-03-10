@@ -12,7 +12,7 @@ import { firebase } from '../../firebase/config'
 const AthletesPage = ({navigation}) => {
     
     const [modality, setModality] = useState('');
-    const [useSupplys, setUseSupplys] = useState(false);
+    const [useSupplys, setUseSupplys] = useState(null);
 
     const checkInputs = () => {
 
@@ -21,7 +21,7 @@ const AthletesPage = ({navigation}) => {
     return(
         <MainContainer>
             <Title title="Atleta"/>
-                <Text style={{color: 'white', fontSize: '1.1rem', textAlign: 'center'}}>
+                <Text style={{color: 'white', fontSize: 20, textAlign: 'center'}}>
                     Para melhor atender suas necessidades, responda:
                 </Text>
             <View>
@@ -37,7 +37,7 @@ const AthletesPage = ({navigation}) => {
                     <RadioOption title="Sim" 
                     status={useSupplys ? 'checked' : 'unchecked'} onPress={ () => setUseSupplys(true)}/>
                     <RadioOption title="Não" 
-                    status={!useSupplys ? 'checked' : 'unchecked'} onPress={ () => setUseSupplys(false)}/>
+                    status={useSupplys == false ? 'checked' : 'unchecked'} onPress={ () => setUseSupplys(false)}/>
                 </RadiosContainer>
                 <RadiosContainer title="Faz uso de protetor bucal?">
                     <RadioOption title="Sim"/>

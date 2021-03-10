@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, ArticleTitle, ArticleHeader, ArticleAuthor } from './styles.js'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { TouchableOpacity } from 'react-native'
 
 const ArticleCard = (props) => {
@@ -11,9 +10,9 @@ const ArticleCard = (props) => {
                     {props.title}
                 </ArticleTitle>
                 <TouchableOpacity onPress={props.save}>
-                {props.saved ?
-                    <AiFillHeart color='red' size='1.6em'/> :
-                    <AiOutlineHeart size='1.6em' /> }
+                {/* {props.saved ?
+                    <AiFillHeart color='red' size='24px'/> :
+                    <AiOutlineHeart size='24px' /> } */}
                 </TouchableOpacity>
             </ArticleHeader>
             <ArticleAuthor>

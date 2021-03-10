@@ -15,9 +15,9 @@ const ArticlePage = (props) => {
             justifyContent: 'space-between', width: '100%'}}>
                 <GoBackButton goBack={props.goBack}/>
                 <TouchableOpacity onPress={props.save}>
-                {props.saved ?
+                {/* {props.saved ?
                     <AiFillHeart color='red' size='1.6em'/> :
-                    <AiOutlineHeart size='1.6em' /> }
+                    <AiOutlineHeart size='1.6em' /> } */}
                 </TouchableOpacity>
             </View>
             <ArticleTitle>

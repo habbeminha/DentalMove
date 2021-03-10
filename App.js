@@ -17,11 +17,11 @@ import ProfessionalsPage from './src/pages/ProfessionalsPage';
 import { Image } from 'react-native';
 import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
 
-const GlobalStyle = createGlobalStyle`
-*{
-    font-family: 'Roboto', sans-serif;
-  }
-`
+/* const GlobalStyle = createGlobalStyle`
+  * {
+      font-family: 'Roboto', sans-serif;
+    }
+`; */
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -61,12 +61,12 @@ const CustomDrawerContent = (props) => {
         label="DENTAL MOVE"
         inactiveTintColor='#FFF'
         inactiveBackgroundColor='#5599FF'
-        icon={ () => <Image source={dente} style={{height: '30px'}}/>} 
+        icon={ () => <Image source={dente} style={{height: 30, width: 30}}/>} 
         style={{
-          borderRadius: 0, margin: 0, marginTop: '-5px', marginBottom: '10px', padding: '1px'
+          borderRadius: 0, margin: 0, marginTop: -5, marginBottom: 10, padding: 1
         }}
         labelStyle={{
-          margin: 0, padding: 0, fontFamily: 'Bungee_400Regular', fontSize: '1.5rem'
+          margin: 0, padding: 0, fontFamily: 'Bungee_400Regular', fontSize: 24
         }}
         onPress={ () => props.navigation.closeDrawer()}
       />
@@ -82,7 +82,7 @@ const CustomDrawerContent = (props) => {
 const App = () => {
   return(
     <NavigationContainer>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="AuthPages" component={AuthPages}/>
         <Stack.Screen name="MainPages" component={MainPages}/>

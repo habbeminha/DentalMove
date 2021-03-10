@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity} from 'react-native';
-import { BiUserCircle } from 'react-icons/bi'
+import { MaterialIcons } from '@expo/vector-icons'
 
 const ProfileButton = () => {
     return(
         <TouchableOpacity onPress={ () => {}}
-            style={{margin: 'auto 2rem', width:'2.8rem'}}>
-            <BiUserCircle color='white' size='2.2rem'/>
+            style={{marginLeft: 'auto', marginRight: 10,  width: 32}}>
+            <MaterialIcons name="bar-chart" size={24} color="white" />
         </TouchableOpacity>
     )
 }

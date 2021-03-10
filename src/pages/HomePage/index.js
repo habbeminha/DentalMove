@@ -12,7 +12,7 @@ const HomePage = ({ navigation }) => {
             <StyledButton onPress={ () => navigation.navigate('Login')} text='ENTRAR' />
             <StyledButton onPress={ () => navigation.navigate('SignUp')} text='CADASTRAR'/>
             <StyledLink onPress={ () => navigation.navigate('MainPages') } 
-            style={{marginTop: '3rem'}} >Visitante</StyledLink>
+            style={{marginTop: 24}} >Visitante</StyledLink>
         </MainContainer>
     );
 }

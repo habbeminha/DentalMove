@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import MainContainer from '../../components/MainContainer';
 import StyledButton from '../../components/StyledButton';
 import StyledLink from '../../components/StyledLink';
@@ -28,7 +28,7 @@ const ProfessionalsPage = ({navigation}) => {
     return(
         <MainContainer>
             <Title title="Profissional da Saúde"/>
-                <Text style={{color: 'white', fontSize: '1.1rem', textAlign: 'center'}}>
+                <Text style={{color: 'white', fontSize: '18px', textAlign: 'center'}}>
                     Para melhor atender suas necessidades, responda:
                 </Text>
             <View>

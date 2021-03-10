@@ -1,15 +1,15 @@
 import React from 'react';
 import { Container, String, ImageContainer } from './styles';
-import {useFonts, Bungee_400Regular} from '@expo-google-fonts/dev'
+import {useFonts} from '@expo-google-fonts/dev'
 import { Image } from 'react-native';
 import  dente  from '../../../assets/dente.png';
 
 const Title = ( props ) => {
 
-    useFonts({Bungee_400Regular});
+    let [fontLoaded] = useFonts({'Bungee_400Regular': require('../../../assets/Bungee-Regular.ttf')});
 
-    return(
-        <Container style={{marginBottom: '2rem'}}>
+    return( !fontLoaded ? <></> :
+        <Container style={{marginBottom: 32}}>
             <ImageContainer>
                 <Image source={dente} style={{ width: '100%', height: '100%'}}/>
             </ImageContainer>

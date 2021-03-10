@@ -1,26 +1,25 @@
 import styled from "styled-components/native";
 
 export const ArticleTitle = styled.Text`
-    text-align: justify;
-    font-size: 1.2rem;
+    text-align: left;
+    font-size: 24px;
     font-weight: bold;
 `;
 
 export const ArticleAuthor = styled.Text`
     text-align: left;
-    font-size: 0.8rem;
+    font-size: 16px;
     color: grey;
 `;
 
 export const ArticleContent = styled.Text`
-    text-align: justify;
-    font-size: 1rem;
+    text-align: left;
+    font-size: 18px;
     margin-top: 10px;
     margin-bottom: 10px;
 `;
 
 export const ArticleLinkButton = styled.Text`
-    display: block;
     width: 100%;
     margin: 5px;
     padding: 5px;
