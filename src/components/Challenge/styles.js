@@ -8,24 +8,31 @@ export const Container = styled.TouchableOpacity`
     flex-direction: column;
     flex-wrap: nowrap; 
     justify-content: space-between;
-    border: 1px solid #5599FF;
+    /* border: 1px solid #5599FF; */
     padding: 8px;
-    margin-top: 10px;
+    margin-top: 15px;
     width: ${ windowWidth*0.93}px;
 `;
 
-export const ArticleHeader = styled.View`
+export const ChallengeHeader = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 `;
 
-export const ArticleTitle = styled.Text`
+export const Title = styled.Text`
     font-weight: bold;
     width: 90%;
-    font-size: 16px;
+    font-size: 20px;
 `;
 
-export const ArticleAuthor = styled.Text`
-    
+export const ProgressBar = styled.View`
+    height: 25px;
+    border-radius: 20px;
+    border-color: #000;
+    border-width: 2px;
+    overflow: hidden;
+    width: 90%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 `;

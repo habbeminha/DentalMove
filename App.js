@@ -16,6 +16,7 @@ import ProfessionalsPage from './src/pages/ProfessionalsPage';
 
 import { Image, StatusBar } from 'react-native';
 import {useFonts} from '@expo-google-fonts/dev'
+import ChallengesPage from './src/pages/ChallengesPage';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -36,11 +37,17 @@ const MainPages = () => {
   return(
     <Drawer.Navigator 
       drawerContent={ (props) => <CustomDrawerContent {...props}/> }
-      screenOptions={{  headerShown: true, headerTintColor: '#FFF', headerTitleAlign: 'center',
-      headerTitleStyle: { fontWeight: 'bold', }, headerStyle:{ backgroundColor: '#5599FF'},
-      headerRight: (props) => <ProfileButton />  }}>
-
+      screenOptions={ ({navigation, route}) => ({  
+        headerShown: true, 
+        headerTintColor: '#FFF', 
+        headerTitleAlign: 'center',
+        headerTitleStyle: { fontWeight: 'bold', }, 
+        headerStyle:{ backgroundColor: '#5599FF'},
+        headerRight: () => <ProfileButton navigation={navigation} />  
+      }) 
+      }>
       <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
+      <Drawer.Screen name="Challenges" component={ChallengesPage} options={{ title: 'Desafios' }}/>
       <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
       
     </Drawer.Navigator>
