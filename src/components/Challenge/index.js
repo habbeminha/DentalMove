@@ -12,7 +12,7 @@ const Challenge = (props) => {
             <ChallengeHeader>
                 {
                     progress >= 100 ? 
-                    <MaterialCommunityIcons name="bookmark-check-outline" size={32} color="#434343" />
+                    <MaterialCommunityIcons name="bookmark-check-outline" size={36} color="#434343" />
                     :
                     <MaterialCommunityIcons name="bookmark-minus-outline" size={32} color="#434343" /> 
                 }

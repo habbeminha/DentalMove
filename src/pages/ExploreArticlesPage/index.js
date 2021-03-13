@@ -10,8 +10,6 @@ const ExploreArticlesPage = ({navigation, route}) => {
 
     useEffect(() => {
         const auxa = getArticlesByTag(route.params.tag);
-        console.log('TAG:');
-        console.log(route.params.tag);
         setArticles(auxa);
     }, [])
 

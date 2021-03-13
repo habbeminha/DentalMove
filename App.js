@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import { AppState } from 'react-native';
 import { createGlobalStyle } from 'styled-components';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -19,7 +20,8 @@ import { Image, StatusBar } from 'react-native';
 import {useFonts} from '@expo-google-fonts/dev'
 import ChallengesPage from './src/pages/ChallengesPage';
 import ExploreArticlesPage from './src/pages/ExploreArticlesPage';
-import { logOut } from './src/firebase/services';
+import { logOut, syncData } from './src/firebase/services';
+import ArticlePage from './src/pages/ArticlePage';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -84,6 +86,34 @@ const CustomDrawerContent = (props) => {
 }
 
 const App = () => {
+
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = (nextAppState) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log("App has come to the foreground!");
+    } else {
+      syncData();
+    }
+
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+    console.log("AppState", appState.current);
+  };
+
+
   return(
     <NavigationContainer>
       <StatusBar barStyle='light-content' hidden={false} />
@@ -94,6 +124,10 @@ const App = () => {
           options={ ({route}) => ({ headerShown: true, headerTintColor: '#FFF', headerTitleAlign: 'center',
           headerTitleStyle: { fontWeight: 'bold'}, headerStyle:{ backgroundColor: '#5599FF'},
           headerTitle: route.params.tag, headerBackTitle: 'Voltar' })} />
+        <Stack.Screen name="ArticlePage" component={ArticlePage} 
+          options={ ({route}) => ({ headerShown: true, headerTintColor: '#FFF', headerTitleAlign: 'center',
+          headerTitleStyle: { fontWeight: 'bold'}, headerStyle:{ backgroundColor: '#5599FF'},
+          headerTitle: 'Artigo', headerBackTitle: 'Voltar' })} />
       </Stack.Navigator>
     </NavigationContainer>
   )

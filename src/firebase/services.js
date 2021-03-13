@@ -7,6 +7,7 @@ var recommendedArticles = [];   // Articles data (objects)
 var localSavedArticles = [];    // Articles Id only (strings)
 var localReadArticles = [];     // Articles Id only (strings)
 
+// Authentication 
 export const login = async (email, password, navigation) => {
     try{
         await firebase.auth().signInWithEmailAndPassword(email, password);
@@ -60,6 +61,8 @@ export async function getUserData(){
             return {};
         }
         user = doc.data();
+        localSavedArticles = user.savedArticles ? user.savedArticles : [];
+        localReadArticles = user.readArticles ? user.readArticles : [];
     }
     return user;
 }
@@ -116,6 +119,7 @@ export function getUsername(){
 }
 
 export function toggleSavedArticle(articleId){
+    localSavedArticles &&
     localSavedArticles.includes(articleId) ? 
     (
         localSavedArticles = localSavedArticles.filter( value => value !== articleId)
@@ -125,8 +129,10 @@ export function toggleSavedArticle(articleId){
 }
 
 export function isSaved(articleId){
-    console.log('Verificou')
-    return localSavedArticles.includes(articleId) 
+    if(localSavedArticles){
+        return localSavedArticles.includes(articleId) 
+    }
+    return false;
 }
 
 export function getSavedArticles(){
@@ -156,12 +162,58 @@ export function getSavedArticlesNum(){
 }
 
 export async function logOut(navigation){
+    await syncData();
+    await firebase.auth().signOut();
     tags = [];
     user = {};
     allArticles = [];       
     recommendedArticles = [];
     localSavedArticles = []; 
     localReadArticles = [];
-    await firebase.auth().signOut();
     navigation.navigate('Home');
+}
+
+export async function getArticlebyId(id){
+    await getAllArticles();
+    let auxa = null;
+    allArticles.forEach( article => {
+        if(article.id === id){
+            auxa = article;
+        }
+    })
+    return auxa;
+}
+
+export async function syncData(){
+    // Syncronize local saved and read articles data with firebase
+    if(firebase.auth().currentUser && firebase.auth().currentUser.uid === user.id){
+        const userRef = db.collection('users').doc(user.id)
+        try {
+            await userRef.update({savedArticles: localSavedArticles, readArticles: localReadArticles});
+            console.log('data sync');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function toggleReadArticle(articleId){
+    localReadArticles &&
+    localReadArticles.includes(articleId) ? 
+    (
+        localReadArticles = localReadArticles.filter( value => value !== articleId)
+    ) : (
+        localReadArticles.push(articleId)
+    )
+}
+
+export function isRead(articleId){
+    if(localReadArticles){
+        return localReadArticles.includes(articleId) 
+    }
+    return false;
+}
+
+export function getReadArticlesNum(){
+    return localReadArticles ? localReadArticles.length : 0
 }

@@ -29,7 +29,7 @@ const RecommendedPage = ({navigation}) => {
             <Text style={{fontWeight: 'bold', fontSize: 16}}>Recomendados para { username || 'você'}!</Text>
             <View>
                 {articles.map( (article, index) => 
-                    <ArticleCard key={index} title={article.title} author={article.author} id={article.id} navigation={navigation} onPress={() => setShowArticle(article)}/>
+                    <ArticleCard key={index} title={article.title} author={article.author} id={article.id} navigation={navigation}/>
                  )}
             </View>
         </PageContainer>

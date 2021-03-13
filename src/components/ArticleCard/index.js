@@ -16,7 +16,7 @@ const ArticleCard = (props) => {
     }, [props.navigation])
 
     return(
-        <Container onPress={props.onPress}>
+        <Container onPress={ () => props.navigation.navigate('ArticlePage', { id: props.id })}>
             <ArticleHeader>
                 <ArticleTitle>
                     {props.title}
@@ -24,7 +24,7 @@ const ArticleCard = (props) => {
                 <TouchableOpacity onPress={ () => {
                     toggleSavedArticle(props.id);
                     setSaved(isSaved(props.id));
-                }}>
+                }} style={{padding: 5}}>
                 {isSaved(props.id) || saved ?
                     <AntDesign name="heart" size={24} color="red" /> :
                     <AntDesign name="hearto" size={24} color="black" /> }

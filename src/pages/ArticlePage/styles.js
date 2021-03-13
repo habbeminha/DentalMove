@@ -30,3 +30,15 @@ export const ArticleLinkButton = styled.Text`
     color: #5599FF;
     font-weight: bold;
 `;
+
+export const ReadButton = styled.Text`
+    background-color: ${(props) => props.active ? '#129512' : 'transparent'};
+    color: ${(props) => props.active ? 'white' : '#129512'};
+    border-color: #129512;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+    padding: 4px;
+    overflow: hidden;
+`;

@@ -1,37 +1,11 @@
-import { getSavedArticlesNum } from "./services";
+import { getReadArticlesNum, getSavedArticlesNum } from "./services";
 
 var numSaved = getSavedArticlesNum();
-
-const challenges = [
-    {
-        title: 'Salvar 10 artigos',
-        actual: numSaved,
-        objective: 10,
-        show: true,
-    },
-    {
-        title: 'Salvar 20 artigos',
-        actual: numSaved,
-        objective: 20,
-        show: numSaved >= 10,
-    },
-    {
-        title: 'Ler 10 artigos',
-        actual: numSaved,
-        objective: 10,
-        show: numSaved >= 10,
-    },
-    {
-        title: 'Ler 20 artigos',
-        actual: numSaved,
-        objective: 10,
-        show: numSaved >= 10,
-    },
-]
+var numRead = getReadArticlesNum();
 
 export function getChallenges(){
-    console.log('GET CHALLENGES');
     numSaved = getSavedArticlesNum();
+    numRead = getReadArticlesNum();
     return [
         {
             title: 'Salvar 10 artigos',
@@ -47,15 +21,15 @@ export function getChallenges(){
         },
         {
             title: 'Ler 10 artigos',
-            actual: numSaved,
+            actual: numRead,
             objective: 10,
-            show: numSaved >= 10,
+            show: true,
         },
         {
             title: 'Ler 20 artigos',
-            actual: numSaved,
-            objective: 10,
-            show: numSaved >= 10,
+            actual: numRead,
+            objective: 20,
+            show: numRead >= 10,
         },
     ];
 }
