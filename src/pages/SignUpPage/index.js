@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import StyledInput from '../../components/StyledInput';
 import MainContainer from '../../components/MainContainer';
 import StyledButton from '../../components/StyledButton';
 import StyledLink from '../../components/StyledLink';
 import Title from '../../components/Title';
 import RadioOption from '../../components/RadioOption';
-import RadiosContainer from '../../components/RadioContainer'
+import RadiosContainer from '../../components/RadiosContainer'
 
 import { firebase } from '../../firebase/config'
 
 const SignUpPage = ({navigation}) => {
 
+    const [allData, setAllData] = useState({});
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,8 +32,8 @@ const SignUpPage = ({navigation}) => {
         else if(!validateEmail(email)){
             errors += 'Email inválido\n';
         } 
-        else if(password.length < 8){
-            errors += 'A senha deve conter mais de 8 caracteres\n';
+        else if(password.length < 6){
+            errors += 'A senha deve conter pelo menos 6 caracteres\n';
         } 
         else if(password !== confirmPassword){
             errors += 'As senhas não conferem\n';
@@ -47,6 +48,12 @@ const SignUpPage = ({navigation}) => {
                 alert('O email já esta sendo usado');
                 return false;
             } else {
+                setAllData({
+                    username,
+                    email,
+                    password,
+                    type
+                })
                 return true;
             }
         } else {
@@ -59,34 +66,31 @@ const SignUpPage = ({navigation}) => {
         <MainContainer> 
             <Title title="Cadastre-se"/>
 
-            <View style={{alignContent: 'left', width: '80%'}}>
+            <ScrollView style={{alignContent: 'flex-start', width: '80%'}}>
                 <StyledInput placeholder='Nome de usuário' 
                 value={username} onChangeText={(text) => setUsername(text)}/>
-                <StyledInput placeholder='Email'
+                <StyledInput placeholder='Email' keyboardType='email-address'
                 value={email} onChangeText={ (text) => setEmail(text)} />
-                <StyledInput placeholder='Senha' type='password'
+                <StyledInput placeholder='Senha' secureTextEntry
                 value={password} onChangeText={ (text) => setPassword(text)}/>
-                <StyledInput placeholder='Confirme a senha' type='password'
+                <StyledInput placeholder='Confirme a senha' secureTextEntry
                 value={confirmPassword} onChangeText={ (text) => setConfirmPassword(text)}/>
-                <Text style={{color: '#FFF', marginTop: 1, fontSize: 1}}>
-                    Você é:
-                </Text>
                 <RadiosContainer title="Você é um(a): ">
-                <RadioOption title="Atleta" 
-                status={type === 'atleta' ? 'checked' : 'unchecked'}
-                onPress={ () => setType('atleta')}/>
-                <RadioOption title="Profissional da saúde" 
-                status={type === 'profissional' ? 'checked' : 'unchecked'}
-                onPress={ () => setType('profissional')}/>
+                    <RadioOption title="Atleta" 
+                    status={type === 'Atletas' ? 'checked' : 'unchecked'}
+                    onPress={ () => setType('Atletas')}/>
+                    <RadioOption title="Profissional da saúde" 
+                    status={type === 'Profissionais da Saúde' ? 'checked' : 'unchecked'}
+                    onPress={ () => setType('Profissionais da Saúde')}/>
                 </RadiosContainer>
-            </View>
+            </ScrollView>
             <StyledButton text='CONTINUAR' 
             onPress={() => {
                 if(checkInputs()){
-                    if( type === 'atleta'){
-                        navigation.navigate('Athletes');
-                    } else if( type === 'profissional'){
-                        navigation.navigate('Professionals')
+                    if( type === 'Atletas'){
+                        navigation.navigate('Athletes', {username, email, password, type});
+                    } else if( type === 'Profissionais da Saúde'){
+                        navigation.navigate('Professionals', {username, email, password, type})
                     }
                 }
             }} />

@@ -13,6 +13,7 @@ const AthletesPage = ({navigation}) => {
     
     const [modality, setModality] = useState('');
     const [useSupplys, setUseSupplys] = useState(null);
+    const [mouthGuard, setMouthGuard] = useState(null);
 
     const checkInputs = () => {
 
@@ -34,21 +35,23 @@ const AthletesPage = ({navigation}) => {
                     status={modality === 'coletive' ? 'checked' : 'unchecked'} onPress={ () => setModality('coletive')}/>
                 </RadiosContainer>
                 <RadiosContainer title="Faz uso de isotônicos ou suplementos?">
-                    <RadioOption title="Sim" 
+                    <RadioOption title="Sim" /* Alimentação e erosão dental */
                     status={useSupplys ? 'checked' : 'unchecked'} onPress={ () => setUseSupplys(true)}/>
                     <RadioOption title="Não" 
-                    status={useSupplys == false ? 'checked' : 'unchecked'} onPress={ () => setUseSupplys(false)}/>
+                    status={useSupplys === false ? 'checked' : 'unchecked'} onPress={ () => setUseSupplys(false)}/>
                 </RadiosContainer>
                 <RadiosContainer title="Faz uso de protetor bucal?">
-                    <RadioOption title="Sim"/>
-                    <RadioOption title="Não"/>
+                <RadioOption title="Sim" 
+                    status={mouthGuard ? 'checked' : 'unchecked'} onPress={ () => setMouthGuard(true)}/>
+                    <RadioOption title="Não" /* Protetor Bucal */
+                    status={mouthGuard === false ? 'checked' : 'unchecked'} onPress={ () => setMouthGuard(false)}/>
                 </RadiosContainer>
-                <RadiosContainer title="Sente dor nas articulações?">
-                    <RadioOption title="Sim"/>
+                <RadiosContainer title="Sente desconforto ou barulhos ao mexer a boca?">
+                    <RadioOption title="Sim"/> {/* Relação equilíbrio, oclusão e esporte */}
                     <RadioOption title="Não"/>
                 </RadiosContainer>
                 <RadiosContainer title="Já sofreu algum trauma na face?">
-                    <RadioOption title="Sim"/>
+                    <RadioOption title="Sim"/> {/* Traumatismos orofaciais no esporte */}
                     <RadioOption title="Não"/>
                 </RadiosContainer>
             </View>

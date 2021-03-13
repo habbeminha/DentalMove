@@ -17,13 +17,13 @@ const LoginPage = ({navigation}) => {
         <MainContainer> 
             <MainIcon/>
             <View style={{width: '80%', alignItems: 'center'}}>
-            <StyledInput placeholder='Email' 
+            <StyledInput placeholder='Email' keyboardType='email-address'
             onChangeText={ text => setEmail(text) } value={email}/>
             <StyledInput placeholder='Senha' secureTextEntry
             onChangeText={ text => setPassword(text) } value={password}/>
             <StyledLink style={{marginTop: 16, marginBottom: 16}}>Esqueci a senha</StyledLink>
             </View>
-            <StyledButton text='ENTRAR' onPress={() => login(email, password)}/>
+            <StyledButton text='ENTRAR' onPress={() => login(email, password, navigation)}/>
             <StyledLink onPress={() => navigation.goBack() }
             style={{marginTop: 3}}>Voltar</StyledLink>
         </MainContainer>

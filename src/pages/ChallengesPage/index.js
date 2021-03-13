@@ -27,11 +27,11 @@ const ChallengesPage = () => {
                 Desafios:
             </Text>
             <Challenge total={15} actual={5} showProgress={showProgress == 1}
-                title="Primeiro desafio" onPress={ () => setShowProgress(1)}/>
+                title="Salvar 10-20 artigos" onPress={ () => setShowProgress(1)}/>
             <Challenge total={15} actual={15} showProgress={showProgress == 2}
-                title="Segundo desafio" onPress={ () => setShowProgress(2)}/>
+                title="Ler 10-20 artigos" onPress={ () => setShowProgress(2)}/>
             <Challenge total={25} actual={5} showProgress={showProgress == 3}
-                title="Terceiro desafio" onPress={ () => setShowProgress(3)}/>
+                title="Compartilhar 5-10 artigos" onPress={ () => setShowProgress(3)}/>
         </PageContainer>
     )
 };

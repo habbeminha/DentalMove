@@ -13,17 +13,19 @@ import AthletesPage from './src/pages/AthletesPage';
 import ProfileButton from './src/components/ProfileButton';
 import SavedArticlesPage from './src/pages/SavedArticlesPage';
 import ProfessionalsPage from './src/pages/ProfessionalsPage';
+import RecommendedPage from './src/pages/RecommendedPage';
 
 import { Image, StatusBar } from 'react-native';
 import {useFonts} from '@expo-google-fonts/dev'
 import ChallengesPage from './src/pages/ChallengesPage';
+import ExploreArticlesPage from './src/pages/ExploreArticlesPage';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const AuthPages = () => {
   return( 
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="Home" component={HomePage} />
       <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="SignUp" component={SignUpPage} />
@@ -45,11 +47,11 @@ const MainPages = () => {
         headerStyle:{ backgroundColor: '#5599FF'},
         headerRight: () => <ProfileButton navigation={navigation} />  
       }) 
-      }>
+    }>
+      <Drawer.Screen name="Recommended" component={RecommendedPage} options={{ title: 'Artigos Recomendados'}} />
       <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
       <Drawer.Screen name="Challenges" component={ChallengesPage} options={{ title: 'Desafios' }}/>
       <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
-      
     </Drawer.Navigator>
   )
 }
@@ -84,9 +86,10 @@ const App = () => {
   return(
     <NavigationContainer>
       <StatusBar barStyle='light-content' hidden={false} />
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false}} >
         <Stack.Screen name="AuthPages" component={AuthPages}/>
         <Stack.Screen name="MainPages" component={MainPages}/>
+        <Stack.Screen name="ExploreArticles" component={ExploreArticlesPage} options={{headerShown: true}} />
       </Stack.Navigator>
     </NavigationContainer>
   )

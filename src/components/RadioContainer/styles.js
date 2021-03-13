@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 
-
 export const RadioContainer = styled.View`
     display: flex;
     flex-direction: row;

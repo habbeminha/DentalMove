@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import ArticleCard from '../../components/ArticleCard';
 import ArticlePage from '../ArticlePage';
 import PageContainer from '../../components/PageContainer';
+import { getSavedArticles } from '../../firebase/services';
 
-const savedArticles = [{
+const savedArticles1 = [{
     title: "Artigo numero um muito legal", author:"Igor Taquary, Laura Habbema", saved:'true'
 }, {
     title:"Primeiros socorros em traumas dentais causados por atividades esportivas: estado de conhecimento, tratamento e prevenção", 
@@ -15,12 +16,23 @@ const savedArticles = [{
     link: "https://www.google.com",
 }]
 
-const SavedArticlesPage = () => {
+const SavedArticlesPage = ({navigation}) => {
 
     const [showArticle, setShowArticle] = useState(false);
+    const [savedArticles, setSavedArticles] = useState([]);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log('Refreshed!');
+            const auxsa = getSavedArticles();
+            setSavedArticles(auxsa);
+            console.log(savedArticles);
+        });
+        return unsubscribe;
+    }, [navigation])
 
     return(
-    savedArticles ? 
+    savedArticles.length > 0 ? 
 
         showArticle ? 
             ( <ArticlePage article={showArticle} goBack={() => setShowArticle('')}/> )
@@ -30,13 +42,14 @@ const SavedArticlesPage = () => {
                     <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{savedArticles.length} artigos salvos</Text>
                 </View>
                 {savedArticles.map( (article, index) => 
-                <ArticleCard key={index} title={article.title} author={article.author} saved={article.saved} onPress={() => setShowArticle(article)}/>)}
+                    <ArticleCard key={index} title={article.title} author={article.author} id={article.id} navigation={navigation} onPress={() => setShowArticle(article)}/>)
+                }
             </PageContainer> )
         :
         <PageContainer>
             <View style={{marginTop: 50, width: '80%'}}>
                 <Text style={{textAlign: 'center', color: 'grey'}}>
-                    Aqui você irá encontrar os seus artigos favoritos. <br />
+                    Aqui você irá encontrar os seus artigos favoritos.
                     Explore novos artigos e salve-os para encontrá-los aqui!
                 </Text>
             </View>

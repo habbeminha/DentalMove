@@ -1,38 +1,26 @@
-import React, { createContext } from 'react';
-import {firebase} from './config';
+import {firebase, db} from './config';
 
-export const login = (email, password) => {
-    firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((response) => {
-            const uid = response.user.uid
-            const usersRef = firebase.firestore().collection('users')
-            usersRef
-                .doc(uid)
-                .get()
-                .then(firestoreDocument => {
-                    if (!firestoreDocument.exists) {
-                        alert("Os dados do usuário não foram encontrados");
-                        return;
-                    }
-                    const user = firestoreDocument.data();
-                    navigation.navigate('MainPages');
-                    alert('Login realizado com sucesso');
-                })
-                .catch(error => {
-                    alert("Não foi possivel realizar o login. \n Verifique o email e/ou a senha!")
-                });
-        })
-        .catch(error => {
-            alert(error)
-        })
+var tags = [];
+var user = {};
+var allArticles = [];           // Articles data (objects)
+var recommendedArticles = [];   // Articles data (objects)
+var localSavedArticles = [];    // Articles Id only (strings)
+var localReadArticles = [];     // Articles Id only (strings)
+
+export const login = async (email, password, navigation) => {
+    try{
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        await getUserData();
+        navigation.navigate('MainPages');
+    }
+    catch(error){ alert(error) }
 }
 
-export const createNewUser = async (data) => {
+export const createNewUser = async (email, username, password, type, interests, navigation) => {
+    //console.log({email, username, password, type, interests})
     firebase
         .auth()
-        .createUserWithEmailAndPassword(data.email, data.password)
+        .createUserWithEmailAndPassword(email, password)
         .then((response) => {
             const uid = response.user.uid
             const data = {
@@ -41,17 +29,20 @@ export const createNewUser = async (data) => {
                 username,
                 password,
                 type,
+                interests
             };
             const usersRef = firebase.firestore().collection('users')
             usersRef
                 .doc(uid)
                 .set(data)
                 .then(() => {
-                    alert('Cadastro realizado com sucesso')
-                    //navigation.navigate('Home', {user: data});
+                    user = data;
+                    alert('Cadastro realizado com sucesso');
+                    navigation.navigate('MainPages');
                 })
                 .catch((error) => {
                     alert(error);
+                    navigation.navigate('Home');
                 });
         })
         .catch((error) => {
@@ -59,10 +50,102 @@ export const createNewUser = async (data) => {
         });
 }
 
-export function toggleSavedArticle(articleId){
-    
+export async function getUserData(){
+    if(Object.keys(user).length === 0){
+        const userId = firebase.auth().currentUser.uid;
+        const usersRef = db.collection('users');
+        const doc = await usersRef.doc(userId).get();
+        if (!doc.exists) {
+            console.log('No matching documents.');
+            return {};
+        }
+        user = doc.data();
+    }
+    return user;
 }
 
-export function isSavedArticle(articleId){
+export async function getRecommendedArticles(){
+    await getUserData();
+    if( recommendedArticles.length === 0){
+        const articles = await getAllArticles();
+        articles.forEach( article => {
+            article.tags.forEach( tag => {
+                if(user.interests.includes(tag)){
+                    recommendedArticles.push(article);
+                }
+            })
+        })
+    }
+    return recommendedArticles;
+}
 
+export async function getAllArticles(){
+    if(allArticles.length === 0){
+        console.log('GET ON FIREBASE');
+        const articlesRef = db.collection('posts');
+        const snapshot = await articlesRef.get();
+        if (snapshot.empty) {
+            console.log('No matching documents.');
+            return [];
+        }
+        snapshot.forEach(doc => {
+            allArticles.push({id: doc.id, ...doc.data()})
+          });
+    }
+    return allArticles
+}
+
+export async function getTags(){
+    if(tags.length === 0){
+        const tagsRef = db.collection('tags');
+        const snapshot = await tagsRef.get();
+        if (snapshot.empty) {
+            console.log('No matching documents.');
+            return [];
+        }
+        snapshot.forEach(doc => {
+            tags.push(doc.data().name)
+          });
+    }
+    return tags
+}
+
+export function getUsername(){
+    if(user.username) return user.username;
+    return null;
+}
+
+export function toggleSavedArticle(articleId){
+    localSavedArticles.includes(articleId) ? 
+    (
+        localSavedArticles = localSavedArticles.filter( value => value !== articleId)
+    ) : (
+        localSavedArticles.push(articleId)
+    )
+}
+
+export function isSaved(articleId){
+    return localSavedArticles.includes(articleId) 
+}
+
+export function getSavedArticles(){
+    if(localSavedArticles.length < 0){ return [] };
+
+    const auxsa = [];
+    allArticles.forEach( article => {
+        if(localSavedArticles.includes(article.id)){
+            auxsa.push(article);
+        }
+    })
+    return auxsa
+}
+
+export function getArticlesByTag(tagName){
+    const auxsa = [];
+    allArticles.forEach( article => {
+        if(article.tags.includes(tagName)){
+            auxsa.push(article);
+        }
+    })
+    return auxsa
 }

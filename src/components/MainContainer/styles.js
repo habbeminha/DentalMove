@@ -12,3 +12,7 @@ export const Container = styled.View`
     font-weight: bold;
     overflow: scroll;
 `;
+
+export const ScrollView = styled.ScrollView`
+    background-color: #5599FF;
+`;
