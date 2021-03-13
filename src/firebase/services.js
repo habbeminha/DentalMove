@@ -125,6 +125,7 @@ export function toggleSavedArticle(articleId){
 }
 
 export function isSaved(articleId){
+    console.log('Verificou')
     return localSavedArticles.includes(articleId) 
 }
 
@@ -148,4 +149,19 @@ export function getArticlesByTag(tagName){
         }
     })
     return auxsa
+}
+
+export function getSavedArticlesNum(){
+    return localSavedArticles.length;
+}
+
+export async function logOut(navigation){
+    tags = [];
+    user = {};
+    allArticles = [];       
+    recommendedArticles = [];
+    localSavedArticles = []; 
+    localReadArticles = [];
+    await firebase.auth().signOut();
+    navigation.navigate('Home');
 }

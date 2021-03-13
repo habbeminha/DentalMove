@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import Challenge from '../../components/Challenge';
 import PageContainer from '../../components/PageContainer';
 import { ChallengesCounter } from './styles';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { useFocusEffect } from '@react-navigation/native';
+import { getSavedArticlesNum } from '../../firebase/services';
+import { getAccomplishedChallengesNum, getActiveChallengesNum, getChallenges } from '../../firebase/challenges';
 //import './style.css';
 
-const ChallengesPage = () => {
+const ChallengesPage = ({navigation}) => {
 
+    const [challenges, setChallenges] = useState();
     const [showProgress, setShowProgress] = useState();
-    const complete = 1;
-    const total = 3
+    const [total, setTotal] = useState(0);
+    const [accomplished, setAccomplished] = useState(0);
+
+    useEffect(()=>{
+        const unsubscribe = navigation.addListener('focus', () => {
+            setChallenges(getChallenges());
+            console.log('useeffect')
+            setAccomplished(getAccomplishedChallengesNum());
+            setTotal(getActiveChallengesNum());
+        });
+        return unsubscribe;
+    }, [navigation])
 
     return(
         <PageContainer>
             <ChallengesCounter>
-                <Text style={{fontSize: 32, color: 'black'}}>
-                    1/3
+                <Text style={{fontSize: 32, color: '#434343'}}>
+                    {accomplished}/{total}
                 </Text>
-                <Text style={{fontWeight: 'bold', color: 'black'}}>
+                <Text style={{fontWeight: 'bold', color: '#434343'}}>
                     Desafios Cumpridos
                 </Text>
             </ChallengesCounter>
@@ -26,12 +40,12 @@ const ChallengesPage = () => {
                     fontSize: 20}}>
                 Desafios:
             </Text>
-            <Challenge total={15} actual={5} showProgress={showProgress == 1}
-                title="Salvar 10-20 artigos" onPress={ () => setShowProgress(1)}/>
-            <Challenge total={15} actual={15} showProgress={showProgress == 2}
-                title="Ler 10-20 artigos" onPress={ () => setShowProgress(2)}/>
-            <Challenge total={25} actual={5} showProgress={showProgress == 3}
-                title="Compartilhar 5-10 artigos" onPress={ () => setShowProgress(3)}/>
+
+            { challenges && challenges.map( (challenge, index) => 
+                challenge.show && 
+                <Challenge total={challenge.objective} actual={challenge.actual} showProgress={showProgress == index}
+                key={index} title={challenge.title} onPress={ () => setShowProgress(index)}/>
+            )}
         </PageContainer>
     )
 };

@@ -21,6 +21,7 @@ export const ChallengeHeader = styled.View`
 `;
 
 export const Title = styled.Text`
+    color: #434343;
     font-weight: bold;
     width: 90%;
     font-size: 20px;
@@ -29,7 +30,7 @@ export const Title = styled.Text`
 export const ProgressBar = styled.View`
     height: 25px;
     border-radius: 20px;
-    border-color: #000;
+    border-color: #434343;
     border-width: 2px;
     overflow: hidden;
     width: 90%;

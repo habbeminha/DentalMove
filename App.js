@@ -19,6 +19,7 @@ import { Image, StatusBar } from 'react-native';
 import {useFonts} from '@expo-google-fonts/dev'
 import ChallengesPage from './src/pages/ChallengesPage';
 import ExploreArticlesPage from './src/pages/ExploreArticlesPage';
+import { logOut } from './src/firebase/services';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,9 +50,9 @@ const MainPages = () => {
       }) 
     }>
       <Drawer.Screen name="Recommended" component={RecommendedPage} options={{ title: 'Artigos Recomendados'}} />
-      <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
-      <Drawer.Screen name="Challenges" component={ChallengesPage} options={{ title: 'Desafios' }}/>
       <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
+      <Drawer.Screen name="Challenges" component={ChallengesPage} options={{ title: 'Desafios' }}/>
+      <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
     </Drawer.Navigator>
   )
 }
@@ -76,7 +77,7 @@ const CustomDrawerContent = (props) => {
       <DrawerItemList {...props} />
       <DrawerItem
         label="Sair"
-        onPress={ () => props.navigation.navigate('AuthPages')}
+        onPress={ async () => await logOut(props.navigation)}
       />
     </DrawerContentScrollView>
   );
@@ -89,7 +90,10 @@ const App = () => {
       <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false}} >
         <Stack.Screen name="AuthPages" component={AuthPages}/>
         <Stack.Screen name="MainPages" component={MainPages}/>
-        <Stack.Screen name="ExploreArticles" component={ExploreArticlesPage} options={{headerShown: true}} />
+        <Stack.Screen name="ExploreArticles" component={ExploreArticlesPage} 
+          options={ ({route}) => ({ headerShown: true, headerTintColor: '#FFF', headerTitleAlign: 'center',
+          headerTitleStyle: { fontWeight: 'bold'}, headerStyle:{ backgroundColor: '#5599FF'},
+          headerTitle: route.params.tag, headerBackTitle: 'Voltar' })} />
       </Stack.Navigator>
     </NavigationContainer>
   )

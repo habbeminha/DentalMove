@@ -11,8 +11,8 @@ export const ChallengesCounter = styled.View`
     margin: 15px auto;
     width: ${windowWidth*0.5}px;
     height: ${windowWidth*0.5}px;
-    border-width: 10px;
-    border-color: black;
+    border-width: 5px;
+    border-color: #434343;
     border-style: solid;
-    border-radius: 100px;
+    border-radius: 4px;
 `;

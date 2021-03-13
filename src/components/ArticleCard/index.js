@@ -6,7 +6,7 @@ import { isSaved, toggleSavedArticle } from '../../firebase/services.js'
 
 const ArticleCard = (props) => {
 
-    const [saved, setSaved] = useState(true);
+    const [saved, setSaved] = useState(false);
 
     useEffect(() => {
         const unsubscribe = props.navigation.addListener('focus', () => {
@@ -25,7 +25,7 @@ const ArticleCard = (props) => {
                     toggleSavedArticle(props.id);
                     setSaved(isSaved(props.id));
                 }}>
-                {saved ?
+                {isSaved(props.id) || saved ?
                     <AntDesign name="heart" size={24} color="red" /> :
                     <AntDesign name="hearto" size={24} color="black" /> }
                 </TouchableOpacity>

@@ -9,8 +9,5 @@ export const StyledInput = styled.TextInput`
     color: #939393;
     background-color: #FFFFFF;
     border-radius: 10px;
-    :focus{
-        border: none;
-        outline: none;
-    }
+    border: none;
 `;

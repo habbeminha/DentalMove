@@ -23,10 +23,8 @@ const SavedArticlesPage = ({navigation}) => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            console.log('Refreshed!');
             const auxsa = getSavedArticles();
             setSavedArticles(auxsa);
-            console.log(savedArticles);
         });
         return unsubscribe;
     }, [navigation])
@@ -42,7 +40,8 @@ const SavedArticlesPage = ({navigation}) => {
                     <Text style={{textAlign: 'right', fontWeight: 'bold'}}>{savedArticles.length} artigos salvos</Text>
                 </View>
                 {savedArticles.map( (article, index) => 
-                    <ArticleCard key={index} title={article.title} author={article.author} id={article.id} navigation={navigation} onPress={() => setShowArticle(article)}/>)
+                    <ArticleCard key={index} title={article.title} author={article.author} 
+                    id={article.id} navigation={navigation} onPress={() => setShowArticle(article)}/>)
                 }
             </PageContainer> )
         :

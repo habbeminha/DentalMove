@@ -12,9 +12,9 @@ const Challenge = (props) => {
             <ChallengeHeader>
                 {
                     progress >= 100 ? 
-                    <MaterialCommunityIcons name="bookmark-check-outline" size={32} color="black" />
+                    <MaterialCommunityIcons name="bookmark-check-outline" size={32} color="#434343" />
                     :
-                    <MaterialCommunityIcons name="bookmark-minus-outline" size={32} color="black" /> 
+                    <MaterialCommunityIcons name="bookmark-minus-outline" size={32} color="#434343" /> 
                 }
                 <Title>
                     {props.title}
@@ -25,7 +25,7 @@ const Challenge = (props) => {
                 <View style={{backgroundColor: '#5599FF', height: 25, width: progress+'%'}}/>
             </ProgressBar> 
             }
-            <View style={{backgroundColor: 'black', height: 1}}/>
+            <View style={{backgroundColor: '#434343', height: 1}}/>
         </Container>
     )
 };

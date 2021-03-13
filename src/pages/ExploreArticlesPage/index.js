@@ -10,11 +10,13 @@ const ExploreArticlesPage = ({navigation, route}) => {
 
     useEffect(() => {
         const auxa = getArticlesByTag(route.params.tag);
+        console.log('TAG:');
+        console.log(route.params.tag);
         setArticles(auxa);
-    })
+    }, [])
 
     return(
-        <PageContainer>
+        <PageContainer> 
             { articles.length > 0 ? 
                 articles.map( (article, index) => 
                 <ArticleCard key={index} title={article.title} author={article.author} 
