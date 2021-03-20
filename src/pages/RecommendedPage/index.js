@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PageContainer from '../../components/PageContainer'
 import { View, Text } from 'react-native';
 import ArticleCard from '../../components/ArticleCard';
-import { getAllArticles, getRecommendedArticles, getUsername } from '../../firebase/services';
+import { getRecommendedArticles, getUsername } from '../../firebase/services';
 
 const RecommendedPage = ({navigation}) => {
 
     const [username, setUsername] = useState();
     const [articles, setArticles] = useState([]);
-    const [showArticle, setShowArticle] = useState();
 
     useEffect( () => {
         const unsubscribe = navigation.addListener('focus', () => {

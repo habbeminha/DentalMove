@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import {firebase, db} from './config';
 
 var tags = [];
@@ -14,7 +15,7 @@ export const login = async (email, password, navigation) => {
         await getUserData();
         navigation.navigate('MainPages');
     }
-    catch(error){ alert(error) }
+    catch(error){ Alert.alert(error) }
 }
 
 export const createNewUser = async (email, username, password, type, interests, navigation) => {
@@ -38,17 +39,43 @@ export const createNewUser = async (email, username, password, type, interests, 
                 .set(data)
                 .then(() => {
                     user = data;
-                    alert('Cadastro realizado com sucesso');
+                    Alert.alert('Cadastro realizado com sucesso');
                     navigation.navigate('MainPages');
                 })
                 .catch((error) => {
-                    alert(error);
+                    Alert.alert(error);
                     navigation.navigate('Home');
                 });
         })
         .catch((error) => {
-            alert(error);
+            Alert.alert(error);
         });
+}
+
+export async function forgotPassword(email, navigation){
+    const emailResult = await firebase.auth().fetchSignInMethodsForEmail(email);
+    if(emailResult.length !== 0){
+        firebase.auth().sendPasswordResetEmail(email)
+        .then( () => {
+            Alert.alert('Um link para alteração da senha foi enviado para seu email.');
+            navigation.navigate('Home');
+        })
+        .catch((e) => {
+            console.log(e)
+            Alert.alert(e);
+            navigation.navigate('Home');
+        })
+    } else {
+        Alert.alert('Email não encontrado');
+    }
+}
+
+export async function passwordReset(code, password, navigation){
+    firebase.auth().confirmPasswordReset
+    firebase.auth().confirmPasswordReset(code, password)
+    .then( () => {
+
+    })
 }
 
 export async function getUserData(){
@@ -72,11 +99,13 @@ export async function getRecommendedArticles(){
     if( recommendedArticles.length === 0){
         const articles = await getAllArticles();
         articles.forEach( article => {
-            article.tags.forEach( tag => {
-                if(user.interests.includes(tag)){
-                    recommendedArticles.push(article);
-                }
-            })
+            if(article.tags.includes(user.type)){
+                article.tags.forEach( tag => {
+                    if(user.interests.includes(tag)){
+                        recommendedArticles.push(article);
+                    }
+                })
+            }
         })
     }
     return recommendedArticles;
@@ -99,7 +128,7 @@ export async function getAllArticles(){
 }
 
 export async function getTags(){
-    if(tags.length === 0){
+    /* if(tags.length === 0){
         const tagsRef = db.collection('tags');
         const snapshot = await tagsRef.get();
         if (snapshot.empty) {
@@ -109,6 +138,25 @@ export async function getTags(){
         snapshot.forEach(doc => {
             tags.push(doc.data().name)
           });
+    } */
+    if(tags.length === 0){
+        tags = [
+            'Esportes individuais: lutas, corrida, ciclismo, entre outros',
+            'Esportes aquáticos: natação, surfe, entre outros', 
+            'Esportes coletivos: handebol, futebol, basquete, entre outros',
+        ]
+        if(user.type === 'Atletas'){
+            tags = tags.concat([
+                'Alimentação e erosão dental', 'Protetor Bucal',
+                'Traumatismos orofaciais no esporte', 'Relação equilíbrio, oclusão e esporte'
+            ])
+        }
+        if(user.type === 'Profissionais da Saúde'){
+            tags = tags.concat([
+                'Protocolos para erosão dental', 'Protocolos para Dopping', 
+                'Protocolos para protetores bucais', 'Protocolos para tratamento de DTM' 
+            ])
+        }
     }
     return tags
 }
