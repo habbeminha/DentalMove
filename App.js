@@ -22,6 +22,7 @@ import ChallengesPage from './src/pages/ChallengesPage';
 import ExploreArticlesPage from './src/pages/ExploreArticlesPage';
 import { logOut, syncData } from './src/firebase/services';
 import ArticlePage from './src/pages/ArticlePage';
+import ForgotPasswordPage from './src/pages/ForgotPassword';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,6 +35,7 @@ const AuthPages = () => {
       <Stack.Screen name="SignUp" component={SignUpPage} />
       <Stack.Screen name="Athletes" component={AthletesPage} />
       <Stack.Screen name="Professionals" component={ProfessionalsPage} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordPage} />
     </Stack.Navigator> 
   )
 }

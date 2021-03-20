@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 import StyledInput from '../../components/StyledInput';
 import MainContainer from '../../components/MainContainer';
 import StyledButton from '../../components/StyledButton';
@@ -12,7 +12,6 @@ import { firebase } from '../../firebase/config'
 
 const SignUpPage = ({navigation}) => {
 
-    const [allData, setAllData] = useState({});
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -42,27 +41,28 @@ const SignUpPage = ({navigation}) => {
             errors += 'Marque uma opção\n';
         }
         
-        if(errors === ''){
+        if(errors.length === 0){
             const emailResult = await firebase.auth().fetchSignInMethodsForEmail(email);
             if(emailResult.length !== 0){
-                alert('O email já esta sendo usado');
+                Alert.alert('O email já esta sendo usado');
                 return false;
             } else {
-                setAllData({
-                    username,
-                    email,
-                    password,
-                    type
-                })
+                if( type === 'Atletas'){
+                    navigation.navigate('Athletes', {username, email, password, type});
+                } else if( type === 'Profissionais da Saúde'){
+                    navigation.navigate('Professionals', {username, email, password, type})
+                }
                 return true;
             }
         } else {
-            alert(errors);
+            Alert.alert(errors);
             return false;
         }
     }
 
     return(
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{flex: 1}} enabled={true} keyboardVerticalOffset={0} >
         <MainContainer> 
             <Title title="Cadastre-se"/>
 
@@ -85,17 +85,10 @@ const SignUpPage = ({navigation}) => {
                 </RadiosContainer>
             </ScrollView>
             <StyledButton text='CONTINUAR' 
-            onPress={() => {
-                if(checkInputs()){
-                    if( type === 'Atletas'){
-                        navigation.navigate('Athletes', {username, email, password, type});
-                    } else if( type === 'Profissionais da Saúde'){
-                        navigation.navigate('Professionals', {username, email, password, type})
-                    }
-                }
-            }} />
+            onPress={() => checkInputs()} />
             <StyledLink onPress={ () => navigation.goBack()}>Voltar</StyledLink>
         </MainContainer>
+        </KeyboardAvoidingView>
     );
 }
 
