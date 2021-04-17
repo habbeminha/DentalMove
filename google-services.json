@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "309711858372",
+    "project_id": "dentalmove-6518b",
+    "storage_bucket": "dentalmove-6518b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309711858372:android:b32b9f71602e868062f791",
+        "android_client_info": {
+          "package_name": "com.dentalmove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309711858372-k2rej195q82fdopha3rqf5i8pcsq5esc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuA3OPYU765-_v4lw8_9ebMclP40lQgDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309711858372-k2rej195q82fdopha3rqf5i8pcsq5esc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "309711858372-r91tjtp5q9h777fup34f325bg4qv8f0a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reactnativefirebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

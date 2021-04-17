@@ -5,7 +5,7 @@ export const Container = styled.View`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 50px;
     min-height: 100%;
     width: 100%;
     background-color: #5599FF;
@@ -14,5 +14,6 @@ export const Container = styled.View`
 `;
 
 export const ScrollView = styled.ScrollView`
+    min-height: 100%;
     background-color: #5599FF;
 `;

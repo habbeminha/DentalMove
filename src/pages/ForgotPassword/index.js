@@ -34,14 +34,11 @@ const ForgotPasswordPage = ({navigation}) => {
             <MainContainer>
                 <MainIcon />
                 <InfoText>
-                    Digite o email cadastrado para receber seu código de alteração da senha.
+                    Digite o email cadastrado para receber seu link de alteração da senha.
                 </InfoText>
                 <StyledInput placeholder="Email" value={email} onChangeText={ text => setEmail(text)}/>
                 <StyledButton text="Enviar" 
                 onPress={ () => checkInputs()} />
-                <StyledLink onPress={ () => navigation.navigate('PasswordReset') } style={{marginTop: 3, fontSize: 16}}>
-                    Ja tenho o código
-                </StyledLink>
                 <StyledLink onPress={ () => navigation.navigate('Home') } style={{marginTop: 3}}>
                     Voltar
                 </StyledLink>

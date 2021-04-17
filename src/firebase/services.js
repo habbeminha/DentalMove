@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 import {firebase, db} from './config';
+import {getDevicePushToken} from './notification-services';
 
 var tags = [];
 var user = {};
@@ -20,6 +21,7 @@ export const login = async (email, password, navigation) => {
 
 export const createNewUser = async (email, username, password, type, interests, navigation) => {
     //console.log({email, username, password, type, interests})
+    const pushToken = await getDevicePushToken();
     firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
@@ -29,9 +31,9 @@ export const createNewUser = async (email, username, password, type, interests, 
                 id: uid,
                 email,
                 username,
-                password,
                 type,
-                interests
+                interests,
+                pushToken: ( pushToken.data ? pushToken : null )
             };
             const usersRef = firebase.firestore().collection('users')
             usersRef
@@ -88,6 +90,12 @@ export async function getUserData(){
             return {};
         }
         user = doc.data();
+        const pushToken = await getDevicePushToken();
+        console.log("getuserData -> pushToken: ");
+        console.log(pushToken);
+        if(user.pushToken !== pushToken){
+            await usersRef.doc(userId).update({pushToken: pushToken})
+        }
         localSavedArticles = user.savedArticles ? user.savedArticles : [];
         localReadArticles = user.readArticles ? user.readArticles : [];
     }
