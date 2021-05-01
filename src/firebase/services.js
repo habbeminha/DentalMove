@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
-import {firebase, db} from './config';
-import {getDevicePushToken} from './notification-services';
+import { firebase, db } from './config';
+import { getDevicePushToken, dailyNotifications, welcomeNotifications, cancelAllScheduledNotifications, savingNotification, challengeNotification } from './notification-services';
 
 var tags = [];
 var user = {};
@@ -35,7 +35,7 @@ export const createNewUser = async (email, username, password, type, interests, 
                 interests,
                 pushToken: ( pushToken.data ? pushToken : null )
             };
-            const usersRef = firebase.firestore().collection('users')
+            const usersRef = firebase.firestore().collection('users');
             usersRef
                 .doc(uid)
                 .set(data)
@@ -48,6 +48,8 @@ export const createNewUser = async (email, username, password, type, interests, 
                     Alert.alert(error);
                     navigation.navigate('Home');
                 });
+            dailyNotifications(); // set daily notifications
+            welcomeNotifications();
         })
         .catch((error) => {
             Alert.alert(error);
@@ -91,8 +93,8 @@ export async function getUserData(){
         }
         user = doc.data();
         const pushToken = await getDevicePushToken();
-        console.log("getuserData -> pushToken: ");
-        console.log(pushToken);
+        await cancelAllScheduledNotifications();
+        dailyNotifications();
         if(user.pushToken !== pushToken){
             await usersRef.doc(userId).update({pushToken: pushToken})
         }
@@ -136,17 +138,6 @@ export async function getAllArticles(){
 }
 
 export async function getTags(){
-    /* if(tags.length === 0){
-        const tagsRef = db.collection('tags');
-        const snapshot = await tagsRef.get();
-        if (snapshot.empty) {
-            console.log('No matching documents.');
-            return [];
-        }
-        snapshot.forEach(doc => {
-            tags.push(doc.data().name)
-          });
-    } */
     if(tags.length === 0){
         tags = [
             'Esportes individuais: lutas, corrida, ciclismo, entre outros',
@@ -175,13 +166,20 @@ export function getUsername(){
 }
 
 export function toggleSavedArticle(articleId){
-    localSavedArticles &&
-    localSavedArticles.includes(articleId) ? 
-    (
-        localSavedArticles = localSavedArticles.filter( value => value !== articleId)
-    ) : (
-        localSavedArticles.push(articleId)
-    )
+    if(localSavedArticles && localSavedArticles.includes(articleId) ){
+        localSavedArticles = localSavedArticles.filter( value => value !== articleId);
+    } else {
+        localSavedArticles.push(articleId);
+        if(localSavedArticles.length === 5){
+            savingNotification();
+        } else
+        if(localSavedArticles.length === 10){
+            challengeNotification('Salvar 10 artigos');
+        } else
+        if(localSavedArticles.length === 20){
+            challengeNotification('Salvar 20 artigos');
+        } 
+    }
 }
 
 export function isSaved(articleId){
@@ -254,13 +252,17 @@ export async function syncData(){
 }
 
 export function toggleReadArticle(articleId){
-    localReadArticles &&
-    localReadArticles.includes(articleId) ? 
-    (
-        localReadArticles = localReadArticles.filter( value => value !== articleId)
-    ) : (
-        localReadArticles.push(articleId)
-    )
+    if(localReadArticles && localReadArticles.includes(articleId)){
+        localReadArticles = localReadArticles.filter( value => value !== articleId);
+    } else {
+        localReadArticles.push(articleId);
+        if(localReadArticles.length === 10){
+            challengeNotification('Ler 10 artigos');
+        } else
+        if(localReadArticles.length === 20){
+            challengeNotification('Ler 20 artigos');
+        } 
+    }
 }
 
 export function isRead(articleId){
