@@ -23,8 +23,9 @@
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#5599FF"
+      },
+      "package": "host.exp.dentalmove"
     },
     "web": {
       "favicon": "./assets/favicon.png"
