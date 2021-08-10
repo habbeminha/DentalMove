@@ -22,38 +22,32 @@ export const login = async (email, password, navigation) => {
 export const createNewUser = async (email, username, password, type, interests, navigation) => {
     //console.log({email, username, password, type, interests})
     const pushToken = await getDevicePushToken();
-    firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((response) => {
-            const uid = response.user.uid
-            const data = {
-                id: uid,
-                email,
-                username,
-                type,
-                interests,
-                pushToken: ( pushToken.data ? pushToken : null )
-            };
-            const usersRef = firebase.firestore().collection('users');
-            usersRef
-                .doc(uid)
-                .set(data)
-                .then(() => {
-                    user = data;
-                    Alert.alert('Cadastro realizado com sucesso');
-                    navigation.navigate('MainPages');
-                })
-                .catch((error) => {
-                    Alert.alert(error);
-                    navigation.navigate('Home');
-                });
-            dailyNotifications(); // set daily notifications
-            welcomeNotifications();
-        })
-        .catch((error) => {
-            Alert.alert(error);
-        });
+    try {
+        const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const uid = response.user.uid
+        const data = {
+            id: uid,
+            email,
+            username,
+            type,
+            interests,
+            pushToken: ( pushToken.data ? pushToken : null )
+        };
+        const usersRef = firebase.firestore().collection('users');
+        await usersRef.doc(uid).set(data); 
+
+        user = data;
+        Alert.alert('Cadastro realizado com sucesso');
+        navigation.navigate('MainPages');
+        
+        await cancelAllScheduledNotifications();
+        dailyNotifications(); // set daily notifications
+        welcomeNotifications();
+        
+    } catch (error) {
+        Alert.alert(error);
+        navigation.navigate('Home');
+    }
 }
 
 export async function forgotPassword(email, navigation){
