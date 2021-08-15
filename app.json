@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#5599FF"
       },
-      "package": "host.exp.exponent"
+      "package": "com.dentalmove"
     },
     "web": {
       "favicon": "./assets/favicon.png"
