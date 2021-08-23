@@ -1,5 +1,6 @@
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
+import { Alert } from 'react-native';
 //import firebase from 'firebase';
 
 export const getDevicePushToken = async () => {
@@ -47,6 +48,17 @@ export const dailyNotifications = () => {
         },
         trigger: {
             hour: 18,
+            minute: 0,
+            repeats: true
+        },
+    });
+    Notifications.scheduleNotificationAsync({
+        content: {
+            title: 'Dia corrido? ',
+            body: 'Não deixe de investir no que não tem preço! Seu conhecimento 🚀✨'
+        },
+        trigger: {
+            hour: 21,
             minute: 0,
             repeats: true
         },
@@ -100,6 +112,24 @@ export const challengeNotification = (challengeTitle) => {
             seconds: 5
         },
     });
+    Alert.alert(
+        `Parabéns você completou o desafio "${challengeTitle}"! 💪`,
+        'Continue salvando e lendo artigos para obter mais conquistas!',
+        ['OK']
+    )
 }
 
 export const cancelAllScheduledNotifications = Notifications.cancelAllScheduledNotificationsAsync;
+
+export const testNotification = () => {
+    Notifications.scheduleNotificationAsync({
+        content: {
+            title: 'TESTE!1234',
+            body: 'Continue salvando artigos que tem a ver com você! E comece a ler hoje mesmo 💕'
+        },
+        trigger: {
+            seconds: 30,
+            repeats: false,
+        },
+    });
+}

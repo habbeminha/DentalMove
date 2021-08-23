@@ -9,8 +9,8 @@ const ExploreArticlesPage = ({navigation, route}) => {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
-        const auxa = getArticlesByTag(route.params.tag);
-        setArticles(auxa);
+        getArticlesByTag(route.params.tag)
+            .then( res => setArticles(res));
     }, [])
 
     return(

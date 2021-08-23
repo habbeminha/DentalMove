@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import { firebase, db } from './config';
 import { getDevicePushToken, dailyNotifications, welcomeNotifications, cancelAllScheduledNotifications, savingNotification, challengeNotification } from './notification-services';
@@ -14,9 +15,9 @@ export const login = async (email, password, navigation) => {
     try{
         await firebase.auth().signInWithEmailAndPassword(email, password);
         await getUserData();
-        navigation.navigate('MainPages');
+        navigation.navigate('MainPages', { screen: 'Recommended' });
     }
-    catch(error){ Alert.alert(error) }
+    catch(error){ Alert.alert("Não foi possível entrar. Verifique seus dados e tente novamente") }
 }
 
 export const createNewUser = async (email, username, password, type, interests, navigation) => {
@@ -36,7 +37,11 @@ export const createNewUser = async (email, username, password, type, interests, 
         const usersRef = firebase.firestore().collection('users');
         await usersRef.doc(uid).set(data); 
 
-        user = data;
+        await getUserData()
+        if(Object.keys(user).length === 0){
+            await usersRef.doc(uid).set(data); 
+        }
+
         Alert.alert('Cadastro realizado com sucesso');
         navigation.navigate('MainPages');
         
@@ -78,7 +83,14 @@ export async function passwordReset(code, password, navigation){
 
 export async function getUserData(){
     if(Object.keys(user).length === 0){
-        const userId = firebase.auth().currentUser.uid;
+        console.log("Sync user data");
+        let userId;
+        if(firebase.auth().currentUser){
+            userId = firebase.auth().currentUser.uid;
+            await AsyncStorage.setItem("user_uid", userId);
+        } else {
+            userId = await AsyncStorage.getItem("user_uid");
+        }
         const usersRef = db.collection('users');
         const doc = await usersRef.doc(userId).get();
         if (!doc.exists) {
@@ -99,13 +111,15 @@ export async function getUserData(){
 }
 
 export async function getRecommendedArticles(){
+    console.log(">>> getRecommendedArticles");
     await getUserData();
     if( recommendedArticles.length === 0){
+
         const articles = await getAllArticles();
         articles.forEach( article => {
             if(article.tags.includes(user.type)){
                 article.tags.forEach( tag => {
-                    if(user.interests.includes(tag)){
+                    if(user.interests.includes(tag) && !recommendedArticles.includes(article)){
                         recommendedArticles.push(article);
                     }
                 })
@@ -117,6 +131,7 @@ export async function getRecommendedArticles(){
 
 export async function getAllArticles(){
     if(allArticles.length === 0){
+        allArticles = [];
         console.log('GET ON FIREBASE');
         const articlesRef = db.collection('posts');
         const snapshot = await articlesRef.get();
@@ -125,13 +140,22 @@ export async function getAllArticles(){
             return [];
         }
         snapshot.forEach(doc => {
-            allArticles.push({id: doc.id, ...doc.data()})
-          });
+            const id_exists = false;
+            allArticles.forEach(article => {
+                if(article.id === doc.id){
+                    id_exists = true;
+                }
+            })
+            if(!id_exists){
+                allArticles.push({id: doc.id, ...doc.data()})
+            }
+        });
     }
-    return allArticles
+    return allArticles;
 }
 
 export async function getTags(){
+    await getUserData();
     if(tags.length === 0){
         tags = [
             'Esportes individuais: lutas, corrida, ciclismo, entre outros',
@@ -183,7 +207,11 @@ export function isSaved(articleId){
     return false;
 }
 
-export function getSavedArticles(){
+export async function getSavedArticles(){
+    console.log(">>> getSavedArticles");
+    await getAllArticles()
+    await getUserData();
+    console.log(localSavedArticles);
     if(localSavedArticles.length < 0){ return [] };
 
     const auxsa = [];
@@ -192,13 +220,16 @@ export function getSavedArticles(){
             auxsa.push(article);
         }
     })
+    console.log(auxsa.length);
     return auxsa
 }
 
-export function getArticlesByTag(tagName){
+export async function getArticlesByTag(tagName){
+    await getAllArticles();
+    await getUserData();
     const auxsa = [];
     allArticles.forEach( article => {
-        if(article.tags.includes(tagName)){
+        if(article.tags.includes(tagName) && article.tags.includes(user.type) && !auxsa.includes(article)){
             auxsa.push(article);
         }
     })
@@ -212,13 +243,14 @@ export function getSavedArticlesNum(){
 export async function logOut(navigation){
     await syncData();
     await firebase.auth().signOut();
+    await AsyncStorage.removeItem("user_uid");
     tags = [];
     user = {};
     allArticles = [];       
     recommendedArticles = [];
     localSavedArticles = []; 
     localReadArticles = [];
-    navigation.navigate('Home');
+    navigation.navigate('AuthPages');
 }
 
 export async function getArticlebyId(id){

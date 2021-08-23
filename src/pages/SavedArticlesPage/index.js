@@ -12,8 +12,8 @@ const SavedArticlesPage = ({navigation}) => {
     const [savedArticles, setSavedArticles] = useState([]);
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            const auxsa = getSavedArticles();
+        const unsubscribe = navigation.addListener('focus', async () => {
+            const auxsa = await getSavedArticles();
             setSavedArticles(auxsa);
         });
         return unsubscribe;

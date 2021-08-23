@@ -1,11 +1,14 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useRef, useState} from 'react';
-import { AppState } from 'react-native';
-import { createGlobalStyle } from 'styled-components';
+import { AppState, Image, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { logOut, syncData } from './src/firebase/services';
+import { useFonts } from '@expo-google-fonts/dev';
 import  dente  from './assets/dente.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import SignUpPage from './src/pages/SignUpPage';
 import LoginPage from './src/pages/LoginPage';
 import HomePage from './src/pages/HomePage';
@@ -15,14 +18,11 @@ import ProfileButton from './src/components/ProfileButton';
 import SavedArticlesPage from './src/pages/SavedArticlesPage';
 import ProfessionalsPage from './src/pages/ProfessionalsPage';
 import RecommendedPage from './src/pages/RecommendedPage';
-
-import { Image, StatusBar } from 'react-native';
-import {useFonts} from '@expo-google-fonts/dev'
 import ChallengesPage from './src/pages/ChallengesPage';
 import ExploreArticlesPage from './src/pages/ExploreArticlesPage';
-import { logOut, syncData } from './src/firebase/services';
 import ArticlePage from './src/pages/ArticlePage';
 import ForgotPasswordPage from './src/pages/ForgotPassword';
+import { testNotification } from './src/firebase/notification-services';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -51,19 +51,19 @@ const MainPages = () => {
         headerTitleStyle: { fontWeight: 'bold', }, 
         headerStyle:{ backgroundColor: '#5599FF'},
         headerRight: () => <ProfileButton navigation={navigation} />  
-      }) 
-    }>
+      }) }
+      >
+      <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
       <Drawer.Screen name="Recommended" component={RecommendedPage} options={{ title: 'Artigos Recomendados'}} />
       <Drawer.Screen name="Saved" component={SavedArticlesPage} options={{ title: 'Artigos Salvos' }}/>
       <Drawer.Screen name="Challenges" component={ChallengesPage} options={{ title: 'Desafios' }}/>
-      <Drawer.Screen name="Explore" component={ExplorePage} options={{ title: 'Explorar Artigos' }}/>
     </Drawer.Navigator>
   )
 }
 
 const CustomDrawerContent = (props) => {
-  useFonts({'Bungee_400Regular': require('./assets/Bungee-Regular.ttf') });
-  return (
+  let [fontLoaded] = useFonts({'Bungee_400Regular': require('./assets/Bungee-Regular.ttf')});
+  return ( !fontLoaded ? <></> :
     <DrawerContentScrollView {...props}>
       <DrawerItem
         label="DENTAL MOVE"
@@ -90,10 +90,19 @@ const CustomDrawerContent = (props) => {
 const App = () => {
 
   const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [userUid, setUserUid] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
+
+    AsyncStorage.getItem("user_uid")
+      .then( value => {
+        console.log("UID Storage >> " + value);
+        setUserUid(value);
+        setLoading(false);
+      })
+      .catch(e => setLoading(false));
 
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange);
@@ -111,15 +120,14 @@ const App = () => {
     }
 
     appState.current = nextAppState;
-    setAppStateVisible(appState.current);
     console.log("AppState", appState.current);
   };
 
-
-  return(
-    <NavigationContainer>
+  return loading ? <></> :
+  ( <NavigationContainer>
       <StatusBar barStyle='light-content' hidden={false} />
-      <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false}} >
+      <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false}} 
+        initialRouteName={userUid ? "MainPages" : "AuthPages"}>
         <Stack.Screen name="AuthPages" component={AuthPages}/>
         <Stack.Screen name="MainPages" component={MainPages}/>
         <Stack.Screen name="ExploreArticles" component={ExploreArticlesPage} 
@@ -131,8 +139,7 @@ const App = () => {
           headerTitleStyle: { fontWeight: 'bold'}, headerStyle:{ backgroundColor: '#5599FF'},
           headerTitle: 'Artigo', headerBackTitle: 'Voltar' })} />
       </Stack.Navigator>
-    </NavigationContainer>
-  )
+    </NavigationContainer> )
 }
 
 export default App;
